@@ -1182,3 +1182,83 @@
             .filter-group {
                 margin-bottom: var(--spacing-xs);
             }
+        }
+        
+        @media (max-width: 576px) {
+            .summary-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .insights-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .users-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .task-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--spacing-sm);
+            }
+            
+            .tasks-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .task-meta {
+                flex-direction: column;
+                gap: var(--spacing-xs);
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: var(--spacing-sm);
+                align-items: flex-start;
+            }
+            
+            .header-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .header-actions {
+                display: flex;
+                gap: var(--spacing-sm);
+                margin-top: var(--spacing-sm);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Container -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-form">
+            <h2 class="form-title">Welcome to the To-Do App</h2>
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" class="form-input" value="test@example.com" required aria-label="Email">
+            </div>
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" class="form-input" value="123456" required aria-label="Password">
+            </div>
+            <button id="loginButton" class="login-btn" aria-label="Login">Login</button>
+            <div class="register-link">
+                Don't have an account? <a href="#" id="registerLink">Register now</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dashboard Container -->
+    <div class="dashboard" id="dashboardContainer">
+        <header class="header">
+            <div class="app-title">To-Do App</div>
+            <div class="header-actions">
+                <button class="header-btn" id="usersButton" aria-label="View Users">Users</button>
+                <button class="header-btn" id="categoriesButton" aria-label="Manage Categories">Manage Categories</button>
+            </div>
+            <div class="header-right">
+                <div class="task
