@@ -2085,7 +2085,7 @@
                 } else if (sortBy === 'title-asc') {
                     return a.title.localeCompare(b.title);
                 } else if (sortBy === 'title-desc') {
-                    return b.title.localeCompare(a.title);
+                    return b.title.localeCompare(b.title);
                 } else if (sortBy === 'priority-desc') {
                     const priorityOrder = { high: 3, medium: 2, low: 1 };
                     return priorityOrder[b.priority] - priorityOrder[a.priority];
@@ -2406,8 +2406,84 @@
 
         darkModeToggle.addEventListener('click', toggleDarkMode);
 
-        undoBtn.addEventListener('click', undo);
-        redoBtn.addEventListener('click', redo);
+        // Fixed Login Function
+        const login = () => {
+            const usernameInput = document.getElementById('login-username').value.trim();
+            const password = document.getElementById('login-password').value;
+            const username = usernameInput.toLowerCase(); // Normalize to lowercase
+
+            if (!username || !password) {
+                showToast('Please enter both username and password', 'error');
+                return;
+            }
+
+            try {
+                if (users[username] && users[username].password === password) {
+                    currentUser = {
+                        username,
+                        email: users[username].email,
+                        avatar: users[username].avatar || 'https://randomuser.me/api/portraits/men/32.jpg'
+                    };
+                    saveCurrentUser();
+                    // Clear input fields
+                    document.getElementById('login-username').value = '';
+                    document.getElementById('login-password').value = '';
+                    showDashboard();
+                    showToast(`Welcome back, ${usernameInput}!`, 'success');
+                } else {
+                    showToast('Invalid username or password', 'error');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showToast('An error occurred during login', 'error');
+            }
+        };
+
+        // Fixed Signup Function
+        const signup = () => {
+            const usernameInput = document.getElementById('signup-username').value.trim();
+            const password = document.getElementById('signup-password').value;
+            const email = document.getElementById('signup-email').value.trim();
+            const username = usernameInput.toLowerCase(); // Normalize to lowercase
+
+            // Validate inputs
+            if (!username || !password || !email) {
+                showToast('Please fill in all fields', 'error');
+                return;
+            }
+
+            // Basic email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showToast('Please enter a valid email address', 'error');
+                return;
+            }
+
+            try {
+                if (users[username]) {
+                    showToast('Username already exists', 'error');
+                    return;
+                }
+
+                users[username] = {
+                    password,
+                    email,
+                    avatar: 'https://randomuser.me/api/portraits/men/32.jpg'
+                };
+                saveUsers();
+                currentUser = { username, email, avatar: users[username].avatar };
+                saveCurrentUser();
+                // Clear input fields
+                document.getElementById('signup-username').value = '';
+                document.getElementById('signup-password').value = '';
+                document.getElementById('signup-email').value = '';
+                showDashboard();
+                showToast(`Account created for ${usernameInput}`, 'success');
+            } catch (error) {
+                console.error('Signup error:', error);
+                showToast('An error occurred during signup', 'error');
+            }
+        };
 
         // Toggle Dark Mode
         const toggleDarkMode = () => {
