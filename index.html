@@ -1,1365 +1,2824 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Professional To-Do App</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Professional To-Do App</title>
 
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Google Fonts - Poppins -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<!-- Google Fonts - Poppins -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Font Awesome Icons -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+<!-- Font Awesome Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
-  <!-- Flatpickr for Calendar -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<!-- Flatpickr for Calendar -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-  <!-- Chart.js for Graphs -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Chart.js for Graphs -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <!-- XLSX for Export -->
-  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<!-- XLSX for Export -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 
-  <!-- jsPDF for PDF Export -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+<!-- jsPDF for PDF Export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 
-  <!-- SortableJS for Drag and Drop -->
-  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<!-- SortableJS for Drag and Drop -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 
-  <!-- Tailwind Config -->
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            poppins: ['Poppins', 'sans-serif']
-          },
-          colors: {
-            primary: '#5D5CDE',
-            darkRed: {
-              light: '#8B0000',
-              dark: '#4B0000'
-            },
-            darkMode: {
-              light: '#1C2526',
-              dark: '#000000'
-            }
-          },
-          animation: {
-            'glow': 'glow 2s ease-in-out infinite alternate',
-            'fade-in': 'fadeIn 0.5s ease-in-out',
-            'slide-in': 'slideIn 0.3s ease-in-out',
-            'scale': 'scale 0.3s ease-in-out',
-            'pulse': 'pulse 1.5s infinite',
-            'bounce-light': 'bounce 1s infinite'
-          },
-          keyframes: {
-            glow: {
-              '0%': { boxShadow: '0 0 5px rgba(93, 92, 222, 0.5)' },
-              '100%': { boxShadow: '0 0 20px rgba(93, 92, 222, 0.8)' }
-            },
-            fadeIn: {
-              '0%': { opacity: '0' },
-              '100%': { opacity: '1' }
-            },
-            slideIn: {
-              '0%': { transform: 'translateY(20px)', opacity: '0' },
-              '100%': { transform: 'translateY(0)', opacity: '1' }
-            },
-            scale: {
-              '0%': { transform: 'scale(0.95)' },
-              '100%': { transform: 'scale(1)' }
-            }
-          }
-        }
-      }
-    };
-  </script>
+<!-- Tailwind Config -->
+<script>
+tailwind.config = {
+darkMode: 'class',
+theme: {
+extend: {
+fontFamily: {
+poppins: ['Poppins', 'sans-serif']
+},
+colors: {
+primary: '#5D5CDE',
+darkRed: {
+light: '#8B0000',
+dark: '#4B0000'
+},
+darkMode: {
+light: '#1C2526',
+dark: '#000000'
+}
+},
+animation: {
+'glow': 'glow 2s ease-in-out infinite alternate',
+'fade-in': 'fadeIn 0.5s ease-in-out',
+'slide-in': 'slideIn 0.3s ease-in-out',
+'scale': 'scale 0.3s ease-in-out',
+'pulse': 'pulse 1.5s infinite',
+'bounce-light': 'bounce 1s infinite'
+},
+keyframes: {
+glow: {
+'0%': { boxShadow: '0 0 5px rgba(93, 92, 222, 0.5)' },
+'100%': { boxShadow: '0 0 20px rgba(93, 92, 222, 0.8)' }
+},
+fadeIn: {
+'0%': { opacity: '0' },
+'100%': { opacity: '1' }
+},
+slideIn: {
+'0%': { transform: 'translateY(20px)', opacity: '0' },
+'100%': { transform: 'translateY(0)', opacity: '1' }
+},
+scale: {
+'0%': { transform: 'scale(0.95)' },
+'100%': { transform: 'scale(1)' }
+}
+}
+}
+}
+};
+</script>
 
-  <style>
-    /* Custom Styles */
-    body {
-      font-family: 'Poppins', sans-serif;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
+<style>
+/* Custom Styles */
+body {
+font-family: 'Poppins', sans-serif;
+transition: background-color 0.3s ease, color 0.3s ease;
+}
 
-    .login-button-glow {
-      position: relative;
-      overflow: hidden;
-    }
+.login-button-glow {
+position: relative;
+overflow: hidden;
+}
 
-    .login-button-glow::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(45deg,
-          rgba(93, 92, 222, 0) 0%,
-          rgba(93, 92, 222, 0.8) 50%,
-          rgba(93, 92, 222, 0) 100%);
-      animation: rotate 3s linear infinite;
-      z-index: -1;
-      border-radius: inherit;
-    }
+.login-button-glow::before {
+content: '';
+position: absolute;
+top: -50%;
+left: -50%;
+width: 200%;
+height: 200%;
+background: linear-gradient(45deg,
+rgba(93, 92, 222, 0) 0%,
+rgba(93, 92, 222, 0.8) 50%,
+rgba(93, 92, 222, 0) 100%);
+animation: rotate 3s linear infinite;
+z-index: -1;
+border-radius: inherit;
+}
 
-    @keyframes rotate {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
-    }
+@keyframes rotate {
+0% {
+transform: rotate(0deg);
+}
+100% {
+transform: rotate(360deg);
+}
+}
 
-    /* Light/Dark Mode Gradients */
-    .dark-mode-gradient {
-      background: linear-gradient(135deg, #1C2526, #000000);
-    }
+/* Light/Dark Mode Gradients */
+.dark-mode-gradient {
+background: linear-gradient(135deg, #1C2526, #000000);
+}
 
-    .light-mode-gradient {
-      background: linear-gradient(135deg, #f8fafc, #e2e8f0);
-    }
-    
-    /* Card Hover Effects */
-    .card-hover {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+.light-mode-gradient {
+background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+}
 
-    .card-hover:hover {
-      transform: scale(1.02);
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    }
+/* Card Hover Effects */
+.card-hover {
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-    /* Task Status Colors */
-    .status-expired {
-      border-color: #DC3545 !important;
-    }
+.card-hover:hover {
+transform: scale(1.02);
+box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
 
-    .status-warning {
-      border-color: #FFC107 !important;
-    }
+/* Task Status Colors */
+.status-expired {
+border-color: #DC3545 !important;
+}
 
-    .status-ok {
-      border-color: #28A745 !important;
-    }
+.status-warning {
+border-color: #FFC107 !important;
+}
 
-    /* Priority Colors */
-    .priority-high {
-      background-color: rgba(220, 53, 69, 0.1);
-      border-left: 4px solid #DC3545;
-    }
+.status-ok {
+border-color: #28A745 !important;
+}
 
-    .priority-medium {
-      background-color: rgba(253, 126, 20, 0.1);
-      border-left: 4px solid #FD7E14;
-    }
+/* Priority Colors */
+.priority-high {
+background-color: rgba(220, 53, 69, 0.1);
+border-left: 4px solid #DC3545;
+}
 
-    .priority-low {
-      background-color: rgba(108, 117, 125, 0.1);
-      border-left: 4px solid #6C757D;
-    }
+.priority-medium {
+background-color: rgba(253, 126, 20, 0.1);
+border-left: 4px solid #FD7E14;
+}
 
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-    }
+.priority-low {
+background-color: rgba(108, 117, 125, 0.1);
+border-left: 4px solid #6C757D;
+}
 
-    ::-webkit-scrollbar-track {
-      background: #f1f1f1;
-    }
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+width: 8px;
+height: 8px;
+}
 
-    .dark ::-webkit-scrollbar-track {
-      background: #2d3748;
-    }
+::-webkit-scrollbar-track {
+background: #f1f1f1;
+}
 
-    ::-webkit-scrollbar-thumb {
-      background: #888;
-      border-radius: 4px;
-    }
+.dark ::-webkit-scrollbar-track {
+background: #2d3748;
+}
 
-    ::-webkit-scrollbar-thumb:hover {
-      background: #555;
-    }
+::-webkit-scrollbar-thumb {
+background: #888;
+border-radius: 4px;
+}
 
-    /* Multi-select Action Bar */
-    .action-bar {
-      transform: translateY(100%);
-      transition: transform 0.3s ease;
-    }
+::-webkit-scrollbar-thumb:hover {
+background: #555;
+}
 
-    .action-bar.show {
-      transform: translateY(0);
-    }
+/* Multi-select Action Bar */
+.action-bar {
+transform: translateY(100%);
+transition: transform 0.3s ease;
+}
 
-    /* Task Timer */
-    .task-timer {
-      font-variant-numeric: tabular-nums;
-    }
+.action-bar.show {
+transform: translateY(0);
+}
 
-    /* Modern Toggle Switch */
-    .toggle-switch {
-      position: relative;
-      display: inline-block;
-      width: 50px;
-      height: 24px;
-    }
+/* Task Timer */
+.task-timer {
+font-variant-numeric: tabular-nums;
+}
 
-    .toggle-switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
+/* Modern Toggle Switch */
+.toggle-switch {
+position: relative;
+display: inline-block;
+width: 50px;
+height: 24px;
+}
 
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      transition: .4s;
-      border-radius: 24px;
-    }
+.toggle-switch input {
+opacity: 0;
+width: 0;
+height: 0;
+}
 
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 16px;
-      width: 16px;
-      left: 4px;
-      bottom: 4px;
-      background-color: white;
-      transition: .4s;
-      border-radius: 50%;
-    }
+.slider {
+position: absolute;
+cursor: pointer;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: #ccc;
+transition: .4s;
+border-radius: 24px;
+}
 
-    input:checked + .slider {
-      background-color: #5D5CDE;
-    }
+.slider:before {
+position: absolute;
+content: "";
+height: 16px;
+width: 16px;
+left: 4px;
+bottom: 4px;
+background-color: white;
+transition: .4s;
+border-radius: 50%;
+}
 
-    input:checked + .slider:before {
-      transform: translateX(26px);
-    }
+input:checked + .slider {
+background-color: #5D5CDE;
+}
 
-    /* Fade Animations */
-    .fade-enter {
-      opacity: 0;
-    }
+input:checked + .slider:before {
+transform: translateX(26px);
+}
 
-    .fade-enter-active {
-      opacity: 1;
-      transition: opacity 300ms;
-    }
+/* Fade Animations */
+.fade-enter {
+opacity: 0;
+}
 
-    .fade-exit {
-      opacity: 1;
-    }
+.fade-enter-active {
+opacity: 1;
+transition: opacity 300ms;
+}
 
-    .fade-exit-active {
-      opacity: 0;
-      transition: opacity 300ms;
-    }
+.fade-exit {
+opacity: 1;
+}
 
-    /* Toast Notifications */
-    .toast {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      padding: 15px 20px;
-      background: #fff;
-      color: #333;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      max-width: 320px;
-      animation: slideInUp 0.3s, fadeOut 0.3s 4.7s;
-    }
+.fade-exit-active {
+opacity: 0;
+transition: opacity 300ms;
+}
 
-    .dark .toast {
-      background: #2d3748;
-      color: #fff;
-    }
+/* Toast Notifications */
+.toast {
+position: fixed;
+bottom: 20px;
+left: 20px;
+padding: 15px 20px;
+background: #fff;
+color: #333;
+border-radius: 8px;
+box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+z-index: 9999;
+display: flex;
+align-items: center;
+gap: 10px;
+max-width: 320px;
+animation: slideInUp 0.3s, fadeOut 0.3s 4.7s;
+}
 
-    @keyframes slideInUp {
-      from {
-        transform: translateY(100%);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
+.dark .toast {
+background: #2d3748;
+color: #fff;
+}
 
-    @keyframes fadeOut {
-      from {
-        opacity: 1;
-      }
-      to {
-        opacity: 0;
-      }
-    }
+@keyframes slideInUp {
+from {
+transform: translateY(100%);
+opacity: 0;
+}
+to {
+transform: translateY(0);
+opacity: 1;
+}
+}
 
-    /* Drag and Drop Styles */
-    .sortable-ghost {
-      opacity: 0.4;
-      background-color: #f0f4f8;
-    }
+@keyframes fadeOut {
+from {
+opacity: 1;
+}
+to {
+opacity: 0;
+}
+}
 
-    .dark .sortable-ghost {
-      background-color: #2d3748;
-    }
+/* Drag and Drop Styles */
+.sortable-ghost {
+opacity: 0.4;
+background-color: #f0f4f8;
+}
 
-    .sortable-drag {
-      opacity: 0.9;
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    }
+.dark .sortable-ghost {
+background-color: #2d3748;
+}
 
-    /* Dark mode switch */
-    .dark-mode-switch {
-      position: relative;
-      width: 60px;
-      height: 30px;
-      border-radius: 15px;
-      background-color: #f0f4f8;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
+.sortable-drag {
+opacity: 0.9;
+box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
 
-    .dark .dark-mode-switch {
-      background-color: #2d3748;
-    }
+/* Dark mode switch */
+.dark-mode-switch {
+position: relative;
+width: 60px;
+height: 30px;
+border-radius: 15px;
+background-color: #f0f4f8;
+cursor: pointer;
+transition: background-color 0.3s;
+}
 
-    .dark-mode-switch .switch-handle {
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      background-color: white;
-      transition: transform 0.3s, background-color 0.3s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #FFB62B;
-    }
+.dark .dark-mode-switch {
+background-color: #2d3748;
+}
 
-    .dark .dark-mode-switch .switch-handle {
-      transform: translateX(30px);
-      background-color: #1a202c;
-      color: #F5F3CE;
-    }
+.dark-mode-switch .switch-handle {
+position: absolute;
+top: 2px;
+left: 2px;
+width: 26px;
+height: 26px;
+border-radius: 50%;
+background-color: white;
+transition: transform 0.3s, background-color 0.3s;
+display: flex;
+align-items: center;
+justify-content: center;
+color: #FFB62B;
+}
 
-    /* Dropdown Menu Animation */
-    .dropdown-menu {
-      transform-origin: top right;
-      animation: scaleIn 0.2s ease;
-    }
+.dark .dark-mode-switch .switch-handle {
+transform: translateX(30px);
+background-color: #1a202c;
+color: #F5F3CE;
+}
 
-    @keyframes scaleIn {
-      from {
-        opacity: 0;
-        transform: scale(0.95);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
+/* Dropdown Menu Animation */
+.dropdown-menu {
+transform-origin: top right;
+animation: scaleIn 0.2s ease;
+}
 
-    /* Login form animation */
-    @keyframes formAppear {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+@keyframes scaleIn {
+from {
+opacity: 0;
+transform: scale(0.95);
+}
+to {
+opacity: 1;
+transform: scale(1);
+}
+}
 
-    .form-appear {
-      animation: formAppear 0.5s ease;
-    }
-  </style>
+/* Login form animation */
+@keyframes formAppear {
+from {
+opacity: 0;
+transform: translateY(-20px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+.form-appear {
+animation: formAppear 0.5s ease;
+}
+</style>
 </head>
 <body class="min-h-screen light-mode-gradient transition-all duration-300">
-  <!-- App Container -->
-  <div id="app-container" class="container mx-auto px-4 py-8 max-w-6xl">
-    <!-- Login Page -->
-    <div id="login-page" class="flex flex-col items-center justify-center min-h-screen form-appear">
-      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-8 w-full max-w-md">
-        <h2 class="text-3xl font-bold text-center mb-6 text-gray-800 dark:text-white">To-Do App</h2>
-        <form id="login-form" class="space-y-4">
-          <div>
-            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
-            <input type="email" id="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" value="test@example.com">
-          </div>
-          <div>
-            <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
-            <input type="password" id="password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" value="123456">
-          </div>
-          <div class="flex justify-center">
-            <button type="submit" class="w-2/3 login-button-glow px-4 py-2 bg-primary text-white font-medium rounded-md hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transform active:scale-95 transition-all">Login</button>
-          </div>
-        </form>
-        <div class="text-center mt-4">
-          <p class="text-gray-600 dark:text-gray-400">
-            Don't have an account?
-            <span id="register-link" class="text-[#00008B] dark:text-blue-400 cursor-pointer hover:underline">Register now</span>
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Dashboard Page -->
-    <div id="dashboard-page" class="hidden animate-fade-in">
-      <!-- Header -->
-      <header class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 mb-6 flex flex-wrap items-center justify-between">
-        <h1 class="text-2xl md:text-3xl font-bold text-gray-800 dark:text-white">
-          <i class="fas fa-tasks mr-2 text-primary"></i> To-Do App
-        </h1>
-
-        <div class="flex items-center space-x-4 mt-4 md:mt-0">
-          <!-- Task Timer -->
-          <div class="task-timer bg-gray-100 dark:bg-gray-700 rounded-lg shadow px-3 py-2 flex items-center">
-            <i class="fas fa-clock text-primary mr-2"></i>
-            <span id="task-timer-display" class="text-lg font-mono text-gray-800 dark:text-white">00:00:00</span>
-          </div>
-
-          <!-- Dark Mode Switch -->
-          <div class="dark-mode-switch" id="dark-mode-toggle" aria-label="Toggle dark mode">
-            <div class="switch-handle">
-              <i class="fas fa-sun"></i>
-            </div>
-          </div>
-
-          <!-- User Status Dropdown -->
-          <div class="relative">
-            <select id="user-status" class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg px-3 py-2 appearance-none cursor-pointer pr-8">
-              <option value="online" selected>Online</option>
-              <option value="break">Break</option>
-              <option value="busy">Busy</option>
-              <option value="away">Away</option>
-            </select>
-            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 dark:text-gray-300">
-              <i class="fas fa-chevron-down text-xs"></i>
-            </div>
-          </div>
-
-          <!-- Notification Button -->
-          <div class="relative">
-            <button id="notification-btn" class="relative p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200">
-              <i class="fas fa-bell text-gray-600 dark:text-gray-300"></i>
-              <span id="notification-badge" class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
-            </button>
-            <!-- Notification Dropdown -->
-            <div id="notification-dropdown" class="hidden absolute right-0 mt-2 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-lg z-10 py-2 dropdown-menu">
-              <div class="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
-                <h3 class="font-semibold text-gray-800 dark:text-white">Notifications</h3>
-              </div>
-              <div id="notification-list" class="max-h-64 overflow-y-auto">
-                <!-- Notifications will be populated here -->
-                <div class="px-4 py-3 text-gray-500 dark:text-gray-400 text-center">
-                  No notifications yet
-                </div>
-              </div>
-              <div class="px-4 py-2 border-t border-gray-200 dark:border-gray-700 text-center">
-                <button id="mark-all-read" class="text-sm text-primary hover:text-primary-600 dark:hover:text-primary-400">
-                  Mark all as read
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- User Profile -->
-          <div class="relative">
-            <button id="profile-btn" class="relative rounded-full w-10 h-10 overflow-hidden border-2 border-green-500" aria-label="User profile">
-              <img id="user-avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="User profile" class="w-full h-full object-cover">
-            </button>
-            <!-- Profile Dropdown -->
-            <div id="profile-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg z-10 dropdown-menu">
-              <div class="py-1">
-                <button id="view-profile-btn" class="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
-                  <i class="fas fa-user mr-2"></i> View Profile
-                </button>
-                <button id="edit-profile-btn" class="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
-                  <i class="fas fa-edit mr-2"></i> Edit Profile
-                </button>
-                <button id="logout-btn" class="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
-                  <i class="fas fa-sign-out-alt mr-2"></i> Logout
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <!-- Main Content -->
-      <div class="grid grid-cols-1 gap-6">
-        <!-- Tasks Summary Section -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 animate-slide-in">
-          <div class="mb-4">
-            <h2 class="text-xl font-semibold text-gray-800 dark:text-white flex items-center">
-              <i class="fas fa-chart-pie mr-2 text-primary"></i> Tasks Overview
-            </h2>
-          </div>
-
-          <!-- Total Tasks Card -->
-          <div class="bg-gradient-to-r from-primary to-indigo-600 rounded-lg shadow-md p-4 mb-4 text-white">
-            <div class="flex justify-between items-center">
-              <div>
-                <h3 class="text-lg font-semibold">Total Tasks</h3>
-                <p id="total-tasks-count" class="text-3xl font-bold">0</p>
-              </div>
-              <div class="bg-white bg-opacity-30 p-3 rounded-full">
-                <i class="fas fa-tasks text-2xl"></i>
-              </div>
-            </div>
-          </div>
-
-          <!-- Tasks Status Cards -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <!-- Completed Tasks -->
-            <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-lg shadow-md p-4 text-white card-hover">
-              <div class="flex justify-between items-center">
-                <div>
-                  <h3 class="text-lg font-semibold">Completed Tasks</h3>
-                  <p id="completed-tasks-count" class="text-3xl font-bold">0</p>
-                </div>
-                <div class="bg-white bg-opacity-30 p-3 rounded-full">
-                  <i class="fas fa-check-circle text-2xl"></i>
-                </div>
-              </div>
-            </div>
-
-            <!-- Pending Tasks -->
-            <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-lg shadow-md p-4 text-white card-hover">
-              <div class="flex justify-between items-center">
-                <div>
-                  <h3 class="text-lg font-semibold">Pending Tasks</h3>
-                  <p id="pending-tasks-count" class="text-3xl font-bold">0</p>
-                </div>
-                <div class="bg-white bg-opacity-30 p-3 rounded-full">
-                  <i class="fas fa-clock text-2xl"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Tasks Section -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 animate-slide-in">
-          <div class="flex flex-wrap justify-between items-center mb-6">
-            <h2 class="text-xl font-semibold text-gray-800 dark:text-white flex items-center">
-              <i class="fas fa-list-check mr-2 text-primary"></i> Tasks
-            </h2>
-
-            <div class="flex flex-wrap gap-2 mt-4 sm:mt-0">
-              <button id="add-task-btn" class="flex items-center px-4 py-2 bg-green-500 text-white rounded-lg shadow hover:bg-green-600 transition-all transform active:scale-95">
-                <i class="fas fa-plus mr-2"></i> Add Task
-              </button>
-
-              <button id="manage-categories-btn" class="flex items-center px-4 py-2 bg-purple-500 text-white rounded-lg shadow hover:bg-purple-600 transition-all transform active:scale-95">
-                <i class="fas fa-tags mr-2"></i> Categories
-              </button>
-
-              <button id="manage-users-btn" class="flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition-all transform active:scale-95">
-                <i class="fas fa-users mr-2"></i> Users
-              </button>
-
-              <div class="dropdown relative">
-                <button id="export-btn" class="flex items-center px-4 py-2 bg-indigo-500 text-white rounded-lg shadow hover:bg-indigo-600 transition-all transform active:scale-95">
-                  <i class="fas fa-file-export mr-2"></i> Export
-                </button>
-              </div>
-
-              <button id="import-btn" class="flex items-center px-4 py-2 bg-teal-500 text-white rounded-lg shadow hover:bg-teal-600 transition-all transform active:scale-95">
-                <i class="fas fa-file-import mr-2"></i> Import
-              </button>
-            </div>
-          </div>
-
-          <!-- View Switcher -->
-          <div class="mb-6 flex items-center justify-between flex-wrap gap-4">
-            <div class="flex items-center space-x-4">
-              <button id="list-view-btn" class="px-4 py-2 bg-primary text-white rounded-lg shadow flex items-center">
-                <i class="fas fa-list mr-2"></i> List View
-              </button>
-              <button id="graph-view-btn" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg shadow flex items-center">
-                <i class="fas fa-chart-bar mr-2"></i> Graph View
-              </button>
-            </div>
-
-            <div class="flex items-center space-x-2">
-              <button id="undo-btn" class="p-2 text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary disabled:opacity-50" disabled>
-                <i class="fas fa-undo"></i>
-              </button>
-              <button id="redo-btn" class="p-2 text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary disabled:opacity-50" disabled>
-                <i class="fas fa-redo"></i>
-              </button>
-
-              <div class="border-l border-gray-300 dark:border-gray-600 h-6 mx-2"></div>
-
-              <div class="relative">
-                <select id="sort-by" class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg pl-3 pr-8 py-2 appearance-none cursor-pointer">
-                  <option value="dueDate-asc">Due Date (Earliest)</option>
-                  <option value="dueDate-desc">Due Date (Latest)</option>
-                  <option value="title-asc">Title (A-Z)</option>
-                  <option value="title-desc">Title (Z-A)</option>
-                  <option value="priority-desc">Priority (High to Low)</option>
-                  <option value="priority-asc">Priority (Low to High)</option>
-                </select>
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 dark:text-gray-300">
-                  <i class="fas fa-chevron-down text-xs"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Tasks List View -->
-          <div id="tasks-list-view">
-            <!-- Multi-select Action Bar -->
-            <div id="multi-action-bar" class="hidden fixed bottom-0 left-0 right-0 bg-gradient-to-r from-primary to-indigo-600 text-white p-4 shadow-lg action-bar z-10">
-              <div class="container mx-auto max-w-6xl flex items-center justify-between">
-                <div>
-                  <span id="selected-count" class="font-semibold">0</span> task(s) selected
-                </div>
-                <div class="flex space-x-3">
-                  <button id="multi-complete-btn" class="px-4 py-2 bg-green-500 hover:bg-green-600 rounded-lg transition-colors">
-                    <i class="fas fa-check mr-2"></i> Mark Complete
-                  </button>
-                  <button id="multi-delete-btn" class="px-4 py-2 bg-red-500 hover:bg-red-600 rounded-lg transition-colors">
-                    <i class="fas fa-trash mr-2"></i> Delete
-                  </button>
-                  <button id="multi-cancel-btn" class="px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded-lg transition-colors">
-                    <i class="fas fa-times mr-2"></i> Cancel
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Tasks Container -->
-            <div id="tasks-container" class="space-y-4">
-              <!-- Tasks will be added here -->
-              <div class="text-center py-8 text-gray-500 dark:text-gray-400">
-                <i class="fas fa-tasks text-5xl mb-4 opacity-30"></i>
-                <p class="text-lg">Loading tasks...</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Graph View -->
-          <div id="tasks-graph-view" class="hidden">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <!-- X-Y Chart -->
-              <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md">
-                <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Tasks Progress Over Time</h3>
-                <div class="h-64">
-                  <canvas id="tasks-line-chart"></canvas>
-                </div>
-              </div>
-
-              <!-- Pie Chart -->
-              <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md">
-                <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Tasks by Status</h3>
-                <div class="h-64">
-                  <canvas id="tasks-pie-chart"></canvas>
-                </div>
-              </div>
-            </div>
-
-            <!-- Additional Charts -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-              <!-- Tasks by Priority -->
-              <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md">
-                <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Tasks by Priority</h3>
-                <div class="h-64">
-                  <canvas id="tasks-priority-chart"></canvas>
-                </div>
-              </div>
-
-              <!-- Tasks by Category -->
-              <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md">
-                <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Tasks by Category</h3>
-                <div class="h-64">
-                  <canvas id="tasks-category-chart"></canvas>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Insights Section -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 animate-slide-in">
-          <div class="mb-4">
-            <h2 class="text-xl font-semibold text-gray-800 dark:text-white flex items-center">
-              <i class="fas fa-lightbulb mr-2 text-primary"></i> Insights
-            </h2>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div class="bg-gradient-to-r from-green-400 to-green-600 rounded-lg shadow-md p-4 text-white">
-              <h3 class="text-lg font-semibold">Total Tasks</h3>
-              <p class="text-3xl font-bold" id="insights-total-tasks">0</p>
-            </div>
-            <div class="bg-gradient-to-r from-blue-400 to-blue-600 rounded-lg shadow-md p-4 text-white">
-              <h3 class="text-lg font-semibold">Completed Tasks</h3>
-              <p class="text-3xl font-bold" id="insights-completed-tasks">0</p>
-            </div>
-            <div class="bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-lg shadow-md p-4 text-white">
-              <h3 class="text-lg font-semibold">Pending Tasks</h3>
-              <p class="text-3xl font-bold" id="insights-pending-tasks">0</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Registration Modal -->
-  <div id="register-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-2xl mx-4 animate-scale">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-xl font-semibold text-gray-800 dark:text-white">Register</h3>
-        <button class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white register-close">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-
-      <form id="register-form" class="space-y-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <!-- First Name -->
-          <div>
-            <label for="first-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">First Name</label>
-            <input type="text" id="first-name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
-          </div>
-
-          <!-- Last Name -->
-          <div>
-            <label for="last-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Last Name</label>
-            <input type="text" id="last-name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
-          </div>
-
-          <!-- Email -->
-          <div>
-            <label for="reg-email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
-            <input type="email" id="reg-email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
-          </div>
-
-          <!-- Confirm Email -->
-          <div>
-            <label for="confirm-email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Confirm Email</label>
-            <input type="email" id="confirm-email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
-          </div>
-
-          <!-- Password -->
-          <div>
-            <label for="reg-password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
-            <input type="password" id="reg-password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
-          </div>
-
-          <!-- Confirm Password -->
-          <div>
-            <label for="confirm-password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Confirm Password</label>
-            <input type="password" id="confirm-password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
-          </div>
-
-          <!-- Birthdate -->
-          <div>
-            <label for="birthdate" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Birthdate</label>
-            <input type="text" id="birthdate" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
-          </div>
-
-          <!-- Nationality -->
-          <div>
-            <label for="nationality" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nationality</label>
-            <select id="nationality" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
-              <option value="">Select Country</option>
-              <!-- Countries will be populated here -->
-            </select>
-          </div>
-
-          <!-- Role -->
-          <div>
-            <label for="role" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Role</label>
-            <select id="role" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
-              <option value="">Select Role</option>
-              <option value="Manager">Manager</option>
-              <option value="Staff">Staff</option>
-              <option value="Customer">Customer</option>
-              <option value="Admin">Admin</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="flex justify-end space-x-3 mt-6">
-          <button type="button" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-all transform active:scale-95 register-close">Cancel</button>
-          <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-all transform active:scale-95">Create</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Add/Edit Task Modal -->
-  <div id="task-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-2xl mx-4 animate-scale overflow-y-auto max-h-[90vh]">
-      <div class="flex justify-between items-center mb-4">
-        <h3 id="task-modal-title" class="text-xl font-semibold text-gray-800 dark:text-white">Add Task</h3>
-        <button class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white task-modal-close">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-
-      <form id="task-form" class="space-y-4">
-        <input type="hidden" id="task-id">
-
-        <!-- Title -->
-        <div>
-          <label for="task-title" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Title</label>
-          <input type="text" id="task-title" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
-        </div>
-
-        <!-- Description -->
-        <div>
-          <label for="task-description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
-          <textarea id="task-description" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white"></textarea>
-        </div>
-
-        <!-- Sub-Tasks -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Sub-Tasks</label>
-          <div id="subtasks-container" class="space-y-2">
-            <!-- Sub-tasks will be added here -->
-          </div>
-          <button type="button" id="add-subtask-btn" class="mt-2 px-3 py-1 bg-primary text-white rounded-md hover:bg-opacity-90 transition-all text-sm flex items-center">
-            <i class="fas fa-plus mr-1"></i> Add Sub-Task
-          </button>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <!-- Due Date -->
-          <div>
-            <label for="task-due-date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Due Date</label>
-            <input type="text" id="task-due-date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-          </div>
-
-          <!-- Priority -->
-          <div>
-            <label for="task-priority" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Priority</label>
-            <select id="task-priority" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-              <option value="low">Low</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
-            </select>
-          </div>
-
-          <!-- Category -->
-          <div>
-            <label for="task-category" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Category</label>
-            <select id="task-category" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-              <!-- Categories will be populated here -->
-            </select>
-          </div>
-        </div>
-
-        <!-- Notes -->
-        <div>
-          <label for="task-notes" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Notes</label>
-          <textarea id="task-notes" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white"></textarea>
-        </div>
-
-        <div class="flex justify-end space-x-3 mt-6">
-          <button type="button" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-all transform active:scale-95 task-modal-close">Cancel</button>
-          <button type="submit" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-opacity-90 transition-all transform active:scale-95">Save</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- View Task Modal -->
-  <div id="view-task-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-2xl mx-4 animate-scale overflow-y-auto max-h-[90vh]">
-      <div class="flex justify-between items-center mb-4">
-        <h3 id="view-task-title" class="text-xl font-semibold text-gray-800 dark:text-white">Task Details</h3>
-        <button class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white view-task-modal-close">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-
-      <div class="space-y-4">
-        <div>
-          <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400">Description</h4>
-          <p id="view-task-description" class="mt-1 text-gray-800 dark:text-white"></p>
-        </div>
-
-        <div>
-          <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400">Sub-Tasks</h4>
-          <ul id="view-subtasks-list" class="mt-1 list-disc pl-5 text-gray-800 dark:text-white">
-            <!-- Sub-tasks will be added here -->
-          </ul>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400">Due Date</h4>
-            <p id="view-task-due-date" class="mt-1 text-gray-800 dark:text-white"></p>
-          </div>
-
-          <div>
-            <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400">Priority</h4>
-            <p id="view-task-priority" class="mt-1"></p>
-          </div>
-
-          <div>
-            <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400">Category</h4>
-            <p id="view-task-category" class="mt-1 text-gray-800 dark:text-white"></p>
-          </div>
-
-          <div>
-            <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400">Status</h4>
-            <p id="view-task-status" class="mt-1"></p>
-          </div>
-        </div>
-
-        <div>
-          <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400">Notes</h4>
-          <p id="view-task-notes" class="mt-1 text-gray-800 dark:text-white"></p>
-        </div>
-
-        <div>
-          <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400">Time Spent</h4>
-          <p id="view-task-time" class="mt-1 text-gray-800 dark:text-white">00:00:00</p>
-        </div>
-
-        <div class="flex justify-end space-x-3 mt-6">
-          <button type="button" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-all transform active:scale-95 view-task-modal-close">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Export Modal -->
-  <div id="export-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-md mx-4 animate-scale">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-xl font-semibold text-gray-800 dark:text-white">Export Tasks</h3>
-        <button class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white export-modal-close">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-
-      <div class="space-y-4">
-        <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Format</label>
-          <select id="export-format" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-            <option value="json">JSON</option>
-            <option value="pdf">PDF</option>
-            <option value="excel">Excel</option>
-            <option value="csv">CSV</option>
-          </select>
-        </div>
-
-        <div class="flex justify-end space-x-3 mt-6">
-          <button type="button" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-all transform active:scale-95 export-modal-close">Cancel</button>
-          <button type="button" id="download-btn" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-opacity-90 transition-all transform active:scale-95">Download</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Import Modal -->
-  <div id="import-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-md mx-4 animate-scale">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-xl font-semibold text-gray-800 dark:text-white">Import Tasks</h3>
-        <button class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white import-modal-close">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-
-      <div class="space-y-4">
-        <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center">
-          <i class="fas fa-file-upload text-4xl text-gray-400 mb-3"></i>
-          <p class="text-gray-600 dark:text-gray-400 mb-2">Drag and drop a JSON file or click to browse</p>
-          <input type="file" id="import-file" class="hidden" accept=".json">
-          <button type="button" id="browse-file-btn" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-opacity-90 transition-all">Browse Files</button>
-        </div>
-
-        <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Or import from URL</label>
-          <input type="url" id="import-url" placeholder="https://example.com/tasks.json" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-        </div>
-
-        <div class="flex justify-end space-x-3 mt-6">
-          <button type="button" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-all transform active:scale-95 import-modal-close">Cancel</button>
-          <button type="button" id="import-btn-confirm" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-opacity-90 transition-all transform active:scale-95">Import</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Categories Modal -->
-  <div id="categories-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-md mx-4 animate-scale">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-xl font-semibold text-gray-800 dark:text-white">Manage Categories</h3>
-        <button class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white categories-modal-close">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-
-      <div class="space-y-4">
-        <div class="flex space-x-2">
-          <input type="text" id="new-category" placeholder="Add new category" class="flex-1 rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-          <button type="button" id="add-category-btn" class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-all transform active:scale-95">
-            <i class="fas fa-plus"></i>
-          </button>
-        </div>
-
-        <div class="border rounded-lg overflow-hidden">
-          <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-            <thead class="bg-gray-50 dark:bg-gray-700">
-              <tr>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Category</th>
-                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Actions</th>
-              </tr>
-            </thead>
-            <tbody id="categories-list" class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-              <!-- Categories will be listed here -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Users Modal -->
-  <div id="users-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-4xl mx-4 animate-scale overflow-y-auto max-h-[90vh]">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-xl font-semibold text-gray-800 dark:text-white">Users</h3>
-        <button class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white users-modal-close">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="users-container">
-        <!-- Users will be added here -->
-        <div class="text-center py-8 text-gray-500 dark:text-gray-400">
-          <i class="fas fa-spinner fa-spin text-3xl mb-4"></i>
-          <p>Loading users...</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Profile View Modal -->
-  <div id="profile-view-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-md mx-4 animate-scale">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-xl font-semibold text-gray-800 dark:text-white">Profile</h3>
-        <button class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white profile-view-modal-close">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-
-      <div class="text-center mb-6">
-        <div class="relative w-24 h-24 mx-auto mb-4">
-          <img id="profile-image" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile Picture" class="w-full h-full rounded-full object-cover">
-        </div>
-        <h4 id="profile-name" class="text-xl font-semibold text-gray-800 dark:text-white">John Doe</h4>
-        <p id="profile-role" class="text-gray-600 dark:text-gray-400">Manager</p>
-      </div>
-
-      <div class="space-y-3">
-        <div class="flex">
-          <span class="w-1/3 text-gray-500 dark:text-gray-400">Email:</span>
-          <span id="profile-email" class="w-2/3 text-gray-800 dark:text-white">john.doe@example.com</span>
-        </div>
-        <div class="flex">
-          <span class="w-1/3 text-gray-500 dark:text-gray-400">Country:</span>
-          <span id="profile-country" class="w-2/3 text-gray-800 dark:text-white">United States</span>
-        </div>
-        <div class="flex">
-          <span class="w-1/3 text-gray-500 dark:text-gray-400">Joining Date:</span>
-          <span id="profile-joining-date" class="w-2/3 text-gray-800 dark:text-white">June 1, 2023</span>
-        </div>
-      </div>
-
-      <div class="flex justify-end space-x-3 mt-6">
-        <button type="button" id="profile-edit-btn" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-opacity-90 transition-all transform active:scale-95">Edit Profile</button>
-        <button type="button" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-all transform active:scale-95 profile-view-modal-close">Close</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Profile Edit Modal -->
-  <div id="profile-edit-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-md mx-4 animate-scale">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-xl font-semibold text-gray-800 dark:text-white">Edit Profile</h3>
-        <button class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white profile-edit-modal-close">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-
-      <form id="profile-edit-form" class="space-y-4">
-        <div class="text-center mb-6">
-          <div class="relative w-24 h-24 mx-auto mb-2">
-            <img id="edit-profile-image" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile Picture" class="w-full h-full rounded-full object-cover">
-            <button type="button" id="change-avatar-btn" class="absolute bottom-0 right-0 bg-primary text-white rounded-full p-2 shadow-md">
-              <i class="fas fa-camera"></i>
-            </button>
-          </div>
-          <input type="file" id="avatar-upload" class="hidden" accept="image/*">
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label for="edit-first-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">First Name</label>
-            <input type="text" id="edit-first-name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
-          </div>
-
-          <div>
-            <label for="edit-last-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Last Name</label>
-            <input type="text" id="edit-last-name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
-          </div>
-        </div>
-
-        <div>
-          <label for="edit-email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
-          <input type="email" id="edit-email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
-        </div>
-
-        <div>
-          <label for="edit-country" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Country</label>
-          <select id="edit-country" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
-            <!-- Countries will be populated here -->
-          </select>
-        </div>
-
-        <div>
-          <label for="edit-role" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Role</label>
-          <select id="edit-role" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
-            <option value="Manager">Manager</option>
-            <option value="Staff">Staff</option>
-            <option value="Customer">Customer</option>
-            <option value="Admin">Admin</option>
-          </select>
-        </div>
-
-        <div class="flex justify-end space-x-3 mt-6">
-          <button type="button" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-all transform active:scale-95 profile-edit-modal-close">Cancel</button>
-          <button type="submit" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-opacity-90 transition-all transform active:scale-95">Save Changes</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-    <!-- Date Range Modal -->
-    <div id="date-range-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
-      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-md mx-4 animate-scale">
-        <div class="flex justify-between items-center mb-4">
-          <h3 class="text-xl font-semibold text-gray-800 dark:text-white">Select Date Range</h3>
-          <button class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white date-range-modal-close">
-            <i class="fas fa-times"></i>
-          </button>
-        </div>
-
-        <div class="space-y-4">
-          <div>
-            <label for="date-range-start" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Start Date</label>
-            <input type="text" id="date-range-start" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-          </div>
-
-          <div>
-            <label for="date-range-end" class="block text-sm font-medium text-gray-700 dark:text-gray-300">End Date</label>
-            <input type="text" id="date-range-end" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-          </div>
-
-          <div class="flex justify-end space-x-3 mt-6">
-            <button type="button" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-all transform active:scale-95 date-range-modal-close">Cancel</button>
-            <button type="button" id="apply-date-range" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-opacity-90 transition-all transform active:scale-95">Apply</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Toast Notifications Container -->
-  <div id="toast-container"></div>
-
-  <!-- Script Section -->
-  <script>
-    // ===============================
-    // Utility Functions & DOM Elements
-    // ===============================
-
-    const generateId = () => '_' + Math.random().toString(36).substr(2, 9);
-
-    const formatTime = (seconds) => {
-      const hours = Math.floor(seconds / 3600);
-      const minutes = Math.floor((seconds % 3600) / 60);
-      const secs = seconds % 60;
-      return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-    };
-
-    const formatDate = (dateStr) => {
-      if (!dateStr) return '';
-      const date = new Date(dateStr);
-      return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-    };
-
-    const showToast = (message, type = 'info') => {
-      const toast = document.createElement('div');
-      toast.className = 'toast';
-      let iconClass = 'fa-info-circle';
-      if (type === 'success') iconClass = 'fa-check-circle';
-      if (type === 'error') iconClass = 'fa-exclamation-circle';
-      if (type === 'warning') iconClass = 'fa-exclamation-triangle';
-      toast.innerHTML = `<i class="fas ${iconClass} mr-2"></i><span>${message}</span>`;
-      document.getElementById('toast-container').appendChild(toast);
-      setTimeout(() => {
-        toast.style.opacity = '0';
-        setTimeout(() => { toast.remove(); }, 300);
-      }, 5000);
-    };
-
-    // ===============================
-    // Modified Export Functionality
-    // ===============================
-
-    // Trigger file download through creating a temporary anchor element.
-    const triggerDownload = (blob, filename) => {
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(() => {
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      }, 100);
-    };
-
-    const exportTasks = () => {
-      const format = document.getElementById('export-format').value;
-      let filename = 'tasks';
-      if (format === 'json') {
-        const jsonContent = JSON.stringify(tasks, null, 2);
-        const blob = new Blob([jsonContent], { type: 'application/json' });
-        filename += '.json';
-        triggerDownload(blob, filename);
-      } else if (format === 'pdf') {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        doc.setFontSize(16);
-        doc.text('Tasks Report', 20, 20);
-        doc.setFontSize(10);
-        doc.text(`Generated: ${new Date().toLocaleString()}`, 20, 30);
-        doc.text(`Total Tasks: ${tasks.length}`, 20, 35);
-        doc.text(`Completed: ${tasks.filter(t => t.completed).length}`, 20, 40);
-        doc.text(`Pending: ${tasks.filter(t => !t.completed).length}`, 20, 45);
-        const tableRows = tasks.map(task => [
-          task.title,
-          task.category || '-',
-          task.priority,
-          task.dueDate ? formatDate(task.dueDate) : '-',
-          task.completed ? 'Completed' : 'Pending'
-        ]);
-        doc.autoTable({
-          startY: 55,
-          head: [['Title', 'Category', 'Priority', 'Due Date', 'Status']],
-          body: tableRows,
-          theme: 'striped',
-          styles: { fontSize: 8 },
-          headStyles: { fillColor: [93, 92, 222] }
-        });
-        const pdfBlob = doc.output('blob');
-        filename += '.pdf';
-        triggerDownload(pdfBlob, filename);
-      } else if (format === 'excel' || format === 'csv') {
-        const worksheet = XLSX.utils.json_to_sheet(tasks.map(task => ({
-          Title: task.title,
-          Description: task.description,
-          'Due Date': task.dueDate ? formatDate(task.dueDate) : '',
-          Priority: task.priority,
-          Category: task.category || '',
-          Status: task.completed ? 'Completed' : 'Pending',
-          Notes: task.notes || ''
-        })));
-        const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Tasks');
-        if (format === 'excel') {
-          const excelBlob = new Blob([XLSX.write(workbook, { bookType: 'xlsx', type: 'array' })], {
-            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-          });
-          filename += '.xlsx';
-          triggerDownload(excelBlob, filename);
-        } else {
-          const csvContent = XLSX.utils.sheet_to_csv(worksheet);
-          const csvBlob = new Blob([csvContent], { type: 'text/csv' });
-          filename += '.csv';
-          triggerDownload(csvBlob, filename);
-        }
-      }
-      showToast(`${filename} file generated and downloading`, 'info');
-      exportModal.classList.add('hidden');
-    };
-
-    // ===============================
-    // (Placeholder) Other Code & Event Listeners
-    // ===============================
-    // The rest of the code includes DOM selection for elements such as login,
-    // tasks, profile management, notifications, filtering, and drag-and-drop functionality.
-    // It also manages charts, localStorage persistence, and undo/redo actions.
-    // For brevity, the complete implementation is maintained as in the first part.
-    // (Refer to the full code preceding this completion for all event listener setup and utility functions.)
-
-    // For example, you would have:
-    // - loadTasks(), renderTasks(), updateCharts(), handleLogin(), handleRegister(), handleTaskSubmit(), etc.
-    // - and all event listeners that tie your UI to these functions.
-    // Finally, you would call initialization functions (such as loadTasks() etc.) on DOMContentLoaded.
-
-    // ===============================
-    // Example Initialization (for context)
-    // ===============================
-    document.addEventListener('DOMContentLoaded', () => {
-      // Initialize date pickers for task due date and custom range
-      flatpickr('#birthdate', { dateFormat: 'Y-m-d', maxDate: 'today' });
-      flatpickr('#task-due-date', { dateFormat: 'Y-m-d', minDate: 'today' });
-      flatpickr('#date-range-start', { dateFormat: 'Y-m-d' });
-      flatpickr('#date-range-end', { dateFormat: 'Y-m-d' });
-
-      // Load tasks, user data, notifications, categories, charts, etc.
-      // Then render the dashboard
-      // loadTasks();
-      // renderTasks();
-      // initCharts();
-      // updateCharts();
-      // etc.
-
-      // Set up event listener for the download button for export tasks
-      document.getElementById('download-btn').addEventListener('click', exportTasks);
-
-      // (Other event listener code would be here as in the full application.)
-    });
-  </script>
+<!-- App Container -->
+<div id="app-container" class="container mx-auto px-4 py-8 max-w-6xl">
+<!-- Login Page -->
+<div id="login-page" class="flex flex-col items-center justify-center min-h-screen form-appear">
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-8 w-full max-w-md">
+<h2 class="text-3xl font-bold text-center mb-6 text-gray-800 dark:text-white">To-Do App</h2>
+<form id="login-form" class="space-y-4">
+<div>
+<label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
+<input type="email" id="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" value="test@example.com">
+</div>
+<div>
+<label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
+<input type="password" id="password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" value="123456">
+</div>
+<div class="flex justify-center">
+<button type="submit" class="w-2/3 login-button-glow px-4 py-2 bg-primary text-white font-medium rounded-md hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transform active:scale-95 transition-all">Login</button>
+</div>
+</form>
+<div class="text-center mt-4">
+<p class="text-gray-600 dark:text-gray-400">
+Don't have an account?
+<span id="register-link" class="text-[#00008B] dark:text-blue-400 cursor-pointer hover:underline">Register now</span>
+</p>
+</div>
+</div>
+</div>
+
+<!-- Dashboard Page -->
+<div id="dashboard-page" class="hidden animate-fade-in">
+<!-- Header -->
+<header class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 mb-6 flex flex-wrap items-center justify-between">
+<h1 class="text-2xl md:text-3xl font-bold text-gray-800 dark:text-white">
+<i class="fas fa-tasks mr-2 text-primary"></i> To-Do App
+</h1>
+
+<div class="flex items-center space-x-4 mt-4 md:mt-0">
+<!-- Task Timer -->
+<div class="task-timer bg-gray-100 dark:bg-gray-700 rounded-lg shadow px-3 py-2 flex items-center">
+<i class="fas fa-clock text-primary mr-2"></i>
+<span id="task-timer-display" class="text-lg font-mono text-gray-800 dark:text-white">00:00:00</span>
+</div>
+
+<!-- Dark Mode Switch -->
+<div class="dark-mode-switch" id="dark-mode-toggle" aria-label="Toggle dark mode">
+<div class="switch-handle">
+<i class="fas fa-sun"></i>
+</div>
+</div>
+
+<!-- User Status Dropdown -->
+<div class="relative">
+<select id="user-status" class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg px-3 py-2 appearance-none cursor-pointer pr-8">
+<option value="online" selected>Online</option>
+<option value="break">Break</option>
+<option value="busy">Busy</option>
+<option value="away">Away</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 dark:text-gray-300">
+<i class="fas fa-chevron-down text-xs"></i>
+</div>
+</div>
+
+<!-- Notification Button -->
+<div class="relative">
+<button id="notification-btn" class="relative p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200">
+<i class="fas fa-bell text-gray-600 dark:text-gray-300"></i>
+<span id="notification-badge" class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+</button>
+<!-- Notification Dropdown -->
+<div id="notification-dropdown" class="hidden absolute right-0 mt-2 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-lg z-10 py-2 dropdown-menu">
+<div class="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+<h3 class="font-semibold text-gray-800 dark:text-white">Notifications</h3>
+</div>
+<div id="notification-list" class="max-h-64 overflow-y-auto">
+<!-- Notifications will be populated here -->
+<div class="px-4 py-3 text-gray-500 dark:text-gray-400 text-center">
+No notifications yet
+</div>
+</div>
+<div class="px-4 py-2 border-t border-gray-200 dark:border-gray-700 text-center">
+<button id="mark-all-read" class="text-sm text-primary hover:text-primary-600 dark:hover:text-primary-400">
+Mark all as read
+</button>
+</div>
+</div>
+</div>
+
+<!-- User Profile -->
+<div class="relative">
+<button id="profile-btn" class="relative rounded-full w-10 h-10 overflow-hidden border-2 border-green-500" aria-label="User profile">
+<img id="user-avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="User profile" class="w-full h-full object-cover">
+</button>
+<!-- Profile Dropdown -->
+<div id="profile-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg z-10 dropdown-menu">
+<div class="py-1">
+<button id="view-profile-btn" class="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+<i class="fas fa-user mr-2"></i> View Profile
+</button>
+<button id="edit-profile-btn" class="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+<i class="fas fa-edit mr-2"></i> Edit Profile
+</button>
+<button id="logout-btn" class="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+<i class="fas fa-sign-out-alt mr-2"></i> Logout
+</button>
+</div>
+</div>
+</div>
+</div>
+</header>
+
+<!-- Main Content -->
+<div class="grid grid-cols-1 gap-6">
+<!-- Tasks Summary Section -->
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 animate-slide-in">
+<div class="mb-4">
+<h2 class="text-xl font-semibold text-gray-800 dark:text-white flex items-center">
+<i class="fas fa-chart-pie mr-2 text-primary"></i> Tasks Overview
+</h2>
+</div>
+
+<!-- Total Tasks Card -->
+<div class="bg-gradient-to-r from-primary to-indigo-600 rounded-lg shadow-md p-4 mb-4 text-white">
+<div class="flex justify-between items-center">
+<div>
+<h3 class="text-lg font-semibold">Total Tasks</h3>
+<p id="total-tasks-count" class="text-3xl font-bold">0</p>
+</div>
+<div class="bg-white bg-opacity-30 p-3 rounded-full">
+<i class="fas fa-tasks text-2xl"></i>
+</div>
+</div>
+</div>
+
+<!-- Tasks Status Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Completed Tasks -->
+<div class="bg-gradient-to-r from-green-500 to-green-600 rounded-lg shadow-md p-4 text-white card-hover">
+<div class="flex justify-between items-center">
+<div>
+<h3 class="text-lg font-semibold">Completed Tasks</h3>
+<p id="completed-tasks-count" class="text-3xl font-bold">0</p>
+</div>
+<div class="bg-white bg-opacity-30 p-3 rounded-full">
+<i class="fas fa-check-circle text-2xl"></i>
+</div>
+</div>
+</div>
+
+<!-- Pending Tasks -->
+<div class="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-lg shadow-md p-4 text-white card-hover">
+<div class="flex justify-between items-center">
+<div>
+<h3 class="text-lg font-semibold">Pending Tasks</h3>
+<p id="pending-tasks-count" class="text-3xl font-bold">0</p>
+</div>
+<div class="bg-white bg-opacity-30 p-3 rounded-full">
+<i class="fas fa-clock text-2xl"></i>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Tasks Section -->
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 animate-slide-in">
+<div class="flex flex-wrap justify-between items-center mb-6">
+<h2 class="text-xl font-semibold text-gray-800 dark:text-white flex items-center">
+<i class="fas fa-list-check mr-2 text-primary"></i> Tasks
+</h2>
+
+<div class="flex flex-wrap gap-2 mt-4 sm:mt-0">
+<button id="add-task-btn" class="flex items-center px-4 py-2 bg-green-500 text-white rounded-lg shadow hover:bg-green-600 transition-all transform active:scale-95">
+<i class="fas fa-plus mr-2"></i> Add Task
+</button>
+
+<button id="manage-categories-btn" class="flex items-center px-4 py-2 bg-purple-500 text-white rounded-lg shadow hover:bg-purple-600 transition-all transform active:scale-95">
+<i class="fas fa-tags mr-2"></i> Categories
+</button>
+
+<button id="manage-users-btn" class="flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition-all transform active:scale-95">
+<i class="fas fa-users mr-2"></i> Users
+</button>
+
+<div class="dropdown relative">
+<button id="export-btn" class="flex items-center px-4 py-2 bg-indigo-500 text-white rounded-lg shadow hover:bg-indigo-600 transition-all transform active:scale-95">
+<i class="fas fa-file-export mr-2"></i> Export
+</button>
+</div>
+
+<button id="import-btn" class="flex items-center px-4 py-2 bg-teal-500 text-white rounded-lg shadow hover:bg-teal-600 transition-all transform active:scale-95">
+<i class="fas fa-file-import mr-2"></i> Import
+</button>
+</div>
+</div>
+
+<!-- View Switcher -->
+<div class="mb-6 flex items-center justify-between flex-wrap gap-4">
+<div class="flex items-center space-x-4">
+<button id="list-view-btn" class="px-4 py-2 bg-primary text-white rounded-lg shadow flex items-center">
+<i class="fas fa-list mr-2"></i> List View
+</button>
+<button id="graph-view-btn" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg shadow flex items-center">
+<i class="fas fa-chart-bar mr-2"></i> Graph View
+</button>
+</div>
+
+<div class="flex items-center space-x-2">
+<button id="undo-btn" class="p-2 text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary disabled:opacity-50" disabled>
+<i class="fas fa-undo"></i>
+</button>
+<button id="redo-btn" class="p-2 text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary disabled:opacity-50" disabled>
+<i class="fas fa-redo"></i>
+</button>
+
+<div class="border-l border-gray-300 dark:border-gray-600 h-6 mx-2"></div>
+
+<div class="relative">
+<select id="sort-by" class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg pl-3 pr-8 py-2 appearance-none cursor-pointer">
+<option value="dueDate-asc">Due Date (Earliest)</option>
+<option value="dueDate-desc">Due Date (Latest)</option>
+<option value="title-asc">Title (A-Z)</option>
+<option value="title-desc">Title (Z-A)</option>
+<option value="priority-desc">Priority (High to Low)</option>
+<option value="priority-asc">Priority (Low to High)</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 dark:text-gray-300">
+<i class="fas fa-chevron-down text-xs"></i>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Filters Section -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+<!-- Status Filter -->
+<div>
+<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Status</label>
+<select id="filter-status" class="w-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg px-3 py-2 appearance-none">
+<option value="all">All</option>
+<option value="active">Active</option>
+<option value="completed">Completed</option>
+</select>
+</div>
+
+<!-- Category Filter -->
+<div>
+<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Category</label>
+<select id="filter-category" class="w-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg px-3 py-2 appearance-none">
+<option value="all">All Categories</option>
+<!-- Categories will be populated here -->
+</select>
+</div>
+
+<!-- Priority Filter -->
+<div>
+<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Priority</label>
+<select id="filter-priority" class="w-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg px-3 py-2 appearance-none">
+<option value="all">All Priorities</option>
+<option value="high">High</option>
+<option value="medium">Medium</option>
+<option value="low">Low</option>
+</select>
+</div>
+
+<!-- Due Date Filter -->
+<div>
+<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Due Date</label>
+<select id="filter-due-date" class="w-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg px-3 py-2 appearance-none">
+<option value="all">All Dates</option>
+<option value="today">Today</option>
+<option value="week">This Week</option>
+<option value="month">This Month</option>
+<option value="custom">Custom Range</option>
+</select>
+</div>
+</div>
+
+<!-- Search Bar -->
+<div class="relative mb-6">
+<input type="text" id="search-tasks" placeholder="Search tasks..." class="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-primary focus:ring-opacity-50 focus:border-primary transition-all text-base">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<i class="fas fa-search text-gray-400"></i>
+</div>
+</div>
+
+<!-- Tasks List View -->
+<div id="tasks-list-view">
+<!-- Multi-select Action Bar -->
+<div id="multi-action-bar" class="hidden fixed bottom-0 left-0 right-0 bg-gradient-to-r from-primary to-indigo-600 text-white p-4 shadow-lg action-bar z-10">
+<div class="container mx-auto max-w-6xl flex items-center justify-between">
+<div>
+<span id="selected-count" class="font-semibold">0</span> task(s) selected
+</div>
+<div class="flex space-x-3">
+<button id="multi-complete-btn" class="px-4 py-2 bg-green-500 hover:bg-green-600 rounded-lg transition-colors">
+<i class="fas fa-check mr-2"></i> Mark Complete
+</button>
+<button id="multi-delete-btn" class="px-4 py-2 bg-red-500 hover:bg-red-600 rounded-lg transition-colors">
+<i class="fas fa-trash mr-2"></i> Delete
+</button>
+<button id="multi-cancel-btn" class="px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded-lg transition-colors">
+<i class="fas fa-times mr-2"></i> Cancel
+</button>
+</div>
+</div>
+</div>
+
+<!-- Tasks Container -->
+<div id="tasks-container" class="space-y-4">
+<!-- Tasks will be added here -->
+<div class="text-center py-8 text-gray-500 dark:text-gray-400">
+<i class="fas fa-tasks text-5xl mb-4 opacity-30"></i>
+<p class="text-lg">Loading tasks...</p>
+</div>
+</div>
+</div>
+
+<!-- Graph View -->
+<div id="tasks-graph-view" class="hidden">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- X-Y Chart -->
+<div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md">
+<h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Tasks Progress Over Time</h3>
+<div class="h-64">
+<canvas id="tasks-line-chart"></canvas>
+</div>
+</div>
+
+<!-- Pie Chart -->
+<div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md">
+<h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Tasks by Status</h3>
+<div class="h-64">
+<canvas id="tasks-pie-chart"></canvas>
+</div>
+</div>
+</div>
+
+<!-- Additional Charts -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+<!-- Tasks by Priority -->
+<div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md">
+<h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Tasks by Priority</h3>
+<div class="h-64">
+<canvas id="tasks-priority-chart"></canvas>
+</div>
+</div>
+
+<!-- Tasks by Category -->
+<div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md">
+<h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Tasks by Category</h3>
+<div class="h-64">
+<canvas id="tasks-category-chart"></canvas>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Insights Section -->
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 animate-slide-in">
+<div class="mb-4">
+<h2 class="text-xl font-semibold text-gray-800 dark:text-white flex items-center">
+<i class="fas fa-lightbulb mr-2 text-primary"></i> Insights
+</h2>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+<!-- Productivity Trend -->
+<div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg shadow-md p-4 text-white card-hover">
+<div class="flex justify-between items-center">
+<div>
+<h3 class="text-lg font-semibold">Productivity Trend</h3>
+<p id="productivity-trend" class="text-2xl font-bold">--%</p>
+</div>
+<div class="bg-white bg-opacity-30 p-3 rounded-full">
+<i class="fas fa-chart-line text-2xl"></i>
+</div>
+</div>
+</div>
+
+<!-- Average Completion Time -->
+<div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg shadow-md p-4 text-white card-hover">
+<div class="flex justify-between items-center">
+<div>
+<h3 class="text-lg font-semibold">Avg. Completion Time</h3>
+<p id="avg-completion-time" class="text-2xl font-bold">-- hrs</p>
+</div>
+<div class="bg-white bg-opacity-30 p-3 rounded-full">
+<i class="fas fa-hourglass-half text-2xl"></i>
+</div>
+</div>
+</div>
+
+<!-- Overdue Tasks -->
+<div class="bg-gradient-to-r from-red-500 to-red-600 rounded-lg shadow-md p-4 text-white card-hover">
+<div class="flex justify-between items-center">
+<div>
+<h3 class="text-lg font-semibold">Overdue Tasks</h3>
+<p id="overdue-tasks" class="text-2xl font-bold">0</p>
+</div>
+<div class="bg-white bg-opacity-30 p-3 rounded-full">
+<i class="fas fa-exclamation-triangle text-2xl"></i>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Insights Summary -->
+<div class="mt-6 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
+<h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-2">Summary</h3>
+<p id="insights-summary" class="text-gray-600 dark:text-gray-300">Loading insights...</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Registration Modal -->
+<div id="register-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-2xl mx-4 animate-scale">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-semibold text-gray-800 dark:text-white">Register</h3>
+<button class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white register-close">
+<i class="fas fa-times"></i>
+</button>
+</div>
+
+<form id="register-form" class="space-y-4">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- First Name -->
+<div>
+<label for="first-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">First Name</label>
+<input type="text" id="first-name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
+</div>
+
+<!-- Last Name -->
+<div>
+<label for="last-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Last Name</label>
+<input type="text" id="last-name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
+</div>
+
+<!-- Email -->
+<div>
+<label for="reg-email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
+<input type="email" id="reg-email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
+</div>
+
+<!-- Confirm Email -->
+<div>
+<label for="confirm-email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Confirm Email</label>
+<input type="email" id="confirm-email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
+</div>
+
+<!-- Password -->
+<div>
+<label for="reg-password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
+<input type="password" id="reg-password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
+</div>
+
+<!-- Confirm Password -->
+<div>
+<label for="confirm-password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Confirm Password</label>
+<input type="password" id="confirm-password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
+</div>
+
+<!-- Birthdate -->
+<div>
+<label for="birthdate" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Birthdate</label>
+<input type="text" id="birthdate" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
+</div>
+
+<!-- Nationality -->
+<div>
+<label for="nationality" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nationality</label>
+<select id="nationality" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
+<option value="">Select Country</option>
+<!-- Countries will be populated here -->
+</select>
+</div>
+
+<!-- Role -->
+<div>
+<label for="role" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Role</label>
+<select id="role" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
+<option value="">Select Role</option>
+<option value="Manager">Manager</option>
+<option value="Staff">Staff</option>
+<option value="Customer">Customer</option>
+<option value="Admin">Admin</option>
+</select>
+</div>
+</div>
+
+<div class="flex justify-end space-x-3 mt-6">
+<button type="button" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-all transform active:scale-95 register-close">Cancel</button>
+<button type="submit" class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-all transform active:scale-95">Create</button>
+</div>
+</form>
+</div>
+</div>
+
+<!-- Add/Edit Task Modal -->
+<div id="task-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-2xl mx-4 animate-scale overflow-y-auto max-h-[90vh]">
+<div class="flex justify-between items-center mb-4">
+<h3 id="task-modal-title" class="text-xl font-semibold text-gray-800 dark:text-white">Add Task</h3>
+<button class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white task-modal-close">
+<i class="fas fa-times"></i>
+</button>
+</div>
+
+<form id="task-form" class="space-y-4">
+<input type="hidden" id="task-id">
+
+<!-- Title -->
+<div>
+<label for="task-title" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Title</label>
+<input type="text" id="task-title" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
+</div>
+
+<!-- Description -->
+<div>
+<label for="task-description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
+<textarea id="task-description" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white"></textarea>
+</div>
+
+<!-- Sub-Tasks -->
+<div>
+<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Sub-Tasks</label>
+<div id="subtasks-container" class="space-y-2">
+<!-- Sub-tasks will be added here -->
+</div>
+<button type="button" id="add-subtask-btn" class="mt-2 px-3 py-1 bg-primary text-white rounded-md hover:bg-opacity-90 transition-all text-sm flex items-center">
+<i class="fas fa-plus mr-1"></i> Add Sub-Task
+</button>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Due Date -->
+<div>
+<label for="task-due-date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Due Date</label>
+<input type="text" id="task-due-date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+</div>
+
+<!-- Priority -->
+<div>
+<label for="task-priority" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Priority</label>
+<select id="task-priority" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+<option value="low">Low</option>
+<option value="medium">Medium</option>
+<option value="high">High</option>
+</select>
+</div>
+
+<!-- Category -->
+<div>
+<label for="task-category" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Category</label>
+<select id="task-category" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+<!-- Categories will be populated here -->
+</select>
+</div>
+</div>
+
+<!-- Notes -->
+<div>
+<label for="task-notes" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Notes</label>
+<textarea id="task-notes" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white"></textarea>
+</div>
+
+<div class="flex justify-end space-x-3 mt-6">
+<button type="button" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-all transform active:scale-95 task-modal-close">Cancel</button>
+<button type="submit" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-opacity-90 transition-all transform active:scale-95">Save</button>
+</div>
+</form>
+</div>
+</div>
+
+<!-- View Task Modal -->
+<div id="view-task-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-2xl mx-4 animate-scale overflow-y-auto max-h-[90vh]">
+<div class="flex justify-between items-center mb-4">
+<h3 id="view-task-title" class="text-xl font-semibold text-gray-800 dark:text-white">Task Details</h3>
+<button class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white view-task-modal-close">
+<i class="fas fa-times"></i>
+</button>
+</div>
+
+<div class="space-y-4">
+<div>
+<h4 class="text-sm font-medium text-gray-500 dark:text-gray-400">Description</h4>
+<p id="view-task-description" class="mt-1 text-gray-800 dark:text-white"></p>
+</div>
+
+<div>
+<h4 class="text-sm font-medium text-gray-500 dark:text-gray-400">Sub-Tasks</h4>
+<ul id="view-subtasks-list" class="mt-1 list-disc pl-5 text-gray-800 dark:text-white">
+<!-- Sub-tasks will be added here -->
+</ul>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<h4 class="text-sm font-medium text-gray-500 dark:text-gray-400">Due Date</h4>
+<p id="view-task-due-date" class="mt-1 text-gray-800 dark:text-white"></p>
+</div>
+
+<div>
+<h4 class="text-sm font-medium text-gray-500 dark:text-gray-400">Priority</h4>
+<p id="view-task-priority" class="mt-1"></p>
+</div>
+
+<div>
+<h4 class="text-sm font-medium text-gray-500 dark:text-gray-400">Category</h4>
+<p id="view-task-category" class="mt-1 text-gray-800 dark:text-white"></p>
+</div>
+
+<div>
+<h4 class="text-sm font-medium text-gray-500 dark:text-gray-400">Status</h4>
+<p id="view-task-status" class="mt-1"></p>
+</div>
+</div>
+
+<div>
+<h4 class="text-sm font-medium text-gray-500 dark:text-gray-400">Notes</h4>
+<p id="view-task-notes" class="mt-1 text-gray-800 dark:text-white"></p>
+</div>
+
+<div>
+<h4 class="text-sm font-medium text-gray-500 dark:text-gray-400">Time Spent</h4>
+<p id="view-task-time" class="mt-1 text-gray-800 dark:text-white">00:00:00</p>
+</div>
+
+<div class="flex justify-end space-x-3 mt-6">
+<button type="button" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-all transform active:scale-95 view-task-modal-close">Close</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Export Modal -->
+<div id="export-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-md mx-4 animate-scale">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-semibold text-gray-800 dark:text-white">Export Tasks</h3>
+<button class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white export-modal-close">
+<i class="fas fa-times"></i>
+</button>
+</div>
+
+<div class="space-y-4">
+<div>
+<label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Format</label>
+<select id="export-format" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+<option value="json">JSON</option>
+<option value="pdf">PDF</option>
+<option value="excel">Excel</option>
+<option value="csv">CSV</option>
+</select>
+</div>
+
+<div class="flex justify-end space-x-3 mt-6">
+<button type="button" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-all transform active:scale-95 export-modal-close">Cancel</button>
+<button type="button" id="download-btn" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-opacity-90 transition-all transform active:scale-95">Download</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Import Modal -->
+<div id="import-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-md mx-4 animate-scale">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-semibold text-gray-800 dark:text-white">Import Tasks</h3>
+<button class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white import-modal-close">
+<i class="fas fa-times"></i>
+</button>
+</div>
+
+<div class="space-y-4">
+<div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center">
+<i class="fas fa-file-upload text-4xl text-gray-400 mb-3"></i>
+<p class="text-gray-600 dark:text-gray-400 mb-2">Drag and drop a JSON file or click to browse</p>
+<input type="file" id="import-file" class="hidden" accept=".json">
+<button type="button" id="browse-file-btn" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-opacity-90 transition-all">Browse Files</button>
+</div>
+
+<div>
+<label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Or import from URL</label>
+<input type="url" id="import-url" placeholder="https://example.com/tasks.json" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+</div>
+
+<div class="flex justify-end space-x-3 mt-6">
+<button type="button" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-all transform active:scale-95 import-modal-close">Cancel</button>
+<button type="button" id="import-btn-confirm" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-opacity-90 transition-all transform active:scale-95">Import</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Categories Modal -->
+<div id="categories-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-md mx-4 animate-scale">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-semibold text-gray-800 dark:text-white">Manage Categories</h3>
+<button class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white categories-modal-close">
+<i class="fas fa-times"></i>
+</button>
+</div>
+
+<div class="space-y-4">
+<div class="flex space-x-2">
+<input type="text" id="new-category" placeholder="Add new category" class="flex-1 rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+<button type="button" id="add-category-btn" class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-all transform active:scale-95">
+<i class="fas fa-plus"></i>
+</button>
+</div>
+
+<div class="border rounded-lg overflow-hidden">
+<table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+<thead class="bg-gray-50 dark:bg-gray-700">
+<tr>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Category</th>
+<th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Actions</th>
+</tr>
+</thead>
+<tbody id="categories-list" class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+<!-- Categories will be listed here -->
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Users Modal -->
+<div id="users-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-4xl mx-4 animate-scale overflow-y-auto max-h-[90vh]">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-semibold text-gray-800 dark:text-white">Users</h3>
+<button class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white users-modal-close">
+<i class="fas fa-times"></i>
+</button>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="users-container">
+<!-- Users will be added here -->
+<div class="text-center py-8 text-gray-500 dark:text-gray-400">
+<i class="fas fa-spinner fa-spin text-3xl mb-4"></i>
+<p>Loading users...</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Profile View Modal -->
+<div id="profile-view-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-md mx-4 animate-scale">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-semibold text-gray-800 dark:text-white">Profile</h3>
+<button class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white profile-view-modal-close">
+<i class="fas fa-times"></i>
+</button>
+</div>
+
+<div class="text-center mb-6">
+<div class="relative w-24 h-24 mx-auto mb-4">
+<img id="profile-image" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile Picture" class="w-full h-full rounded-full object-cover">
+</div>
+<h4 id="profile-name" class="text-xl font-semibold text-gray-800 dark:text-white">John Doe</h4>
+<p id="profile-role" class="text-gray-600 dark:text-gray-400">Manager</p>
+</div>
+
+<div class="space-y-3">
+<div class="flex">
+<span class="w-1/3 text-gray-500 dark:text-gray-400">Email:</span>
+<span id="profile-email" class="w-2/3 text-gray-800 dark:text-white"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ebb1b4b3b6f6bcb7bdabbec3bab6abb7bec5c8c4c6">[email&#160;protected]</a></span>
+</div>
+<div class="flex">
+<span class="w-1/3 text-gray-500 dark:text-gray-400">Country:</span>
+<span id="profile-country" class="w-2/3 text-gray-800 dark:text-white">United States</span>
+</div>
+<div class="flex">
+<span class="w-1/3 text-gray-500 dark:text-gray-400">Joining Date:</span>
+<span id="profile-joining-date" class="w-2/3 text-gray-800 dark:text-white">June 1, 2023</span>
+</div>
+</div>
+
+<div class="flex justify-end space-x-3 mt-6">
+<button type="button" id="profile-edit-btn" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-opacity-90 transition-all transform active:scale-95">Edit Profile</button>
+<button type="button" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-all transform active:scale-95 profile-view-modal-close">Close</button>
+</div>
+</div>
+</div>
+
+<!-- Profile Edit Modal -->
+<div id="profile-edit-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-md mx-4 animate-scale">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-semibold text-gray-800 dark:text-white">Edit Profile</h3>
+<button class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white profile-edit-modal-close">
+<i class="fas fa-times"></i>
+</button>
+</div>
+
+<form id="profile-edit-form" class="space-y-4">
+<div class="text-center mb-6">
+<div class="relative w-24 h-24 mx-auto mb-2">
+<img id="edit-profile-image" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile Picture" class="w-full h-full rounded-full object-cover">
+<button type="button" id="change-avatar-btn" class="absolute bottom-0 right-0 bg-primary text-white rounded-full p-2 shadow-md">
+<i class="fas fa-camera"></i>
+</button>
+</div>
+<input type="file" id="avatar-upload" class="hidden" accept="image/*">
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label for="edit-first-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">First Name</label>
+<input type="text" id="edit-first-name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
+</div>
+
+<div>
+<label for="edit-last-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Last Name</label>
+<input type="text" id="edit-last-name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
+</div>
+</div>
+
+<div>
+<label for="edit-email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
+<input type="email" id="edit-email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
+</div>
+
+<div>
+<label for="edit-country" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Country</label>
+<select id="edit-country" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
+<!-- Countries will be populated here -->
+</select>
+</div>
+
+<div>
+<label for="edit-role" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Role</label>
+<select id="edit-role" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
+<option value="Manager">Manager</option>
+<option value="Staff">Staff</option>
+<option value="Customer">Customer</option>
+<option value="Admin">Admin</option>
+</select>
+</div>
+
+<div class="flex justify-end space-x-3 mt-6">
+<button type="button" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-all transform active:scale-95 profile-edit-modal-close">Cancel</button>
+<button type="submit" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-opacity-90 transition-all transform active:scale-95">Save Changes</button>
+</div>
+</form>
+</div>
+</div>
+
+<!-- Date Range Modal -->
+<div id="date-range-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-md mx-4 animate-scale">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-semibold text-gray-800 dark:text-white">Select Date Range</h3>
+<button class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white date-range-modal-close">
+<i class="fas fa-times"></i>
+</button>
+</div>
+
+<div class="space-y-4">
+<div>
+<label for="date-range-start" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Start Date</label>
+<input type="text" id="date-range-start" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+</div>
+
+<div>
+<label for="date-range-end" class="block text-sm font-medium text-gray-700 dark:text-gray-300">End Date</label>
+<input type="text" id="date-range-end" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+</div>
+
+<div class="flex justify-end space-x-3 mt-6">
+<button type="button" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-all transform active:scale-95 date-range-modal-close">Cancel</button>
+<button type="button" id="apply-date-range" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-opacity-90 transition-all transform active:scale-95">Apply</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Toast Container -->
+<div id="toast-container"></div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script>
+// Data storage
+let tasks = [];
+let categories = ['Work', 'Personal', 'Urgent', 'Long-term'];
+let notifications = [];
+let taskTimes = {};
+let currentUser = null;
+let selectedTasks = new Set();
+let activeTimer = null;
+let activeTaskId = null;
+let dateRangeStart = null;
+let dateRangeEnd = null;
+let historyStack = [];
+let redoStack = [];
+
+const charts = {
+lineChart: null,
+pieChart: null,
+priorityChart: null,
+categoryChart: null
+};
+
+// DOM Elements
+const loginPage = document.getElementById('login-page');
+const dashboardPage = document.getElementById('dashboard-page');
+const loginForm = document.getElementById('login-form');
+const registerLink = document.getElementById('register-link');
+const registerModal = document.getElementById('register-modal');
+const registerForm = document.getElementById('register-form');
+const registerCloseButtons = document.querySelectorAll('.register-close');
+const darkModeToggle = document.getElementById('dark-mode-toggle');
+const taskModal = document.getElementById('task-modal');
+const taskModalCloseButtons = document.querySelectorAll('.task-modal-close');
+const viewTaskModal = document.getElementById('view-task-modal');
+const viewTaskModalCloseButtons = document.querySelectorAll('.view-task-modal-close');
+const addTaskBtn = document.getElementById('add-task-btn');
+const taskForm = document.getElementById('task-form');
+const tasksContainer = document.getElementById('tasks-container');
+const exportBtn = document.getElementById('export-btn');
+const exportModal = document.getElementById('export-modal');
+const exportModalCloseButtons = document.querySelectorAll('.export-modal-close');
+const downloadBtn = document.getElementById('download-btn');
+const importBtn = document.getElementById('import-btn');
+const importModal = document.getElementById('import-modal');
+const importModalCloseButtons = document.querySelectorAll('.import-modal-close');
+const importBtnConfirm = document.getElementById('import-btn-confirm');
+const browseFileBtn = document.getElementById('browse-file-btn');
+const importFile = document.getElementById('import-file');
+const manageCategoriesBtn = document.getElementById('manage-categories-btn');
+const categoriesModal = document.getElementById('categories-modal');
+const categoriesModalCloseButtons = document.querySelectorAll('.categories-modal-close');
+const profileBtn = document.getElementById('profile-btn');
+const profileDropdown = document.getElementById('profile-dropdown');
+const logoutBtn = document.getElementById('logout-btn');
+const viewProfileBtn = document.getElementById('view-profile-btn');
+const profileViewModal = document.getElementById('profile-view-modal');
+const profileViewModalCloseButtons = document.querySelectorAll('.profile-view-modal-close');
+const profileEditModal = document.getElementById('profile-edit-modal');
+const profileEditModalCloseButtons = document.querySelectorAll('.profile-edit-modal-close');
+const profileEditForm = document.getElementById('profile-edit-form');
+const notificationBtn = document.getElementById('notification-btn');
+const notificationDropdown = document.getElementById('notification-dropdown');
+const notificationList = document.getElementById('notification-list');
+const markAllReadBtn = document.getElementById('mark-all-read');
+const tasksListView = document.getElementById('tasks-list-view');
+const tasksGraphView = document.getElementById('tasks-graph-view');
+const listViewBtn = document.getElementById('list-view-btn');
+const graphViewBtn = document.getElementById('graph-view-btn');
+const searchTasks = document.getElementById('search-tasks');
+const filterStatus = document.getElementById('filter-status');
+const filterCategory = document.getElementById('filter-category');
+const filterPriority = document.getElementById('filter-priority');
+const filterDueDate = document.getElementById('filter-due-date');
+const sortBy = document.getElementById('sort-by');
+const multiActionBar = document.getElementById('multi-action-bar');
+const selectedCount = document.getElementById('selected-count');
+const multiCompleteBtn = document.getElementById('multi-complete-btn');
+const multiDeleteBtn = document.getElementById('multi-delete-btn');
+const multiCancelBtn = document.getElementById('multi-cancel-btn');
+const userStatus = document.getElementById('user-status');
+const manageUsersBtn = document.getElementById('manage-users-btn');
+const usersModal = document.getElementById('users-modal');
+const usersModalCloseButtons = document.querySelectorAll('.users-modal-close');
+const usersContainer = document.getElementById('users-container');
+const dateRangeModal = document.getElementById('date-range-modal');
+const dateRangeModalCloseButtons = document.querySelectorAll('.date-range-modal-close');
+const applyDateRangeBtn = document.getElementById('apply-date-range');
+const taskTimerDisplay = document.getElementById('task-timer-display');
+const undoBtn = document.getElementById('undo-btn');
+const redoBtn = document.getElementById('redo-btn');
+
+// Utility Functions
+const generateId = () => {
+return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+const r = Math.random() * 16 | 0;
+const v = c === 'x' ? r : (r & 0x3 | 0x8);
+return v.toString(16);
+});
+};
+
+const formatDate = (dateStr) => {
+if (!dateStr) return '';
+const date = new Date(dateStr);
+return date.toLocaleDateString('en-US', {
+year: 'numeric',
+month: 'short',
+day: 'numeric'
+});
+};
+
+const formatTime = (seconds) => {
+const hrs = Math.floor(seconds / 3600).toString().padStart(2, '0');
+const mins = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+const secs = (seconds % 60).toString().padStart(2, '0');
+return `${hrs}:${mins}:${secs}`;
+};
+
+const showToast = (message, type = 'info') => {
+const toast = document.createElement('div');
+toast.className = `toast animate-slide-in-up`;
+
+let icon = '<i class="fas fa-info-circle text-blue-500"></i>';
+if (type === 'success') icon = '<i class="fas fa-check-circle text-green-500"></i>';
+if (type === 'error') icon = '<i class="fas fa-exclamation-circle text-red-500"></i>';
+if (type === 'warning') icon = '<i class="fas fa-exclamation-triangle text-yellow-500"></i>';
+
+toast.innerHTML = `
+${icon}
+<span>${message}</span>
+`;
+
+document.getElementById('toast-container').appendChild(toast);
+
+setTimeout(() => {
+toast.classList.add('animate-fade-out');
+setTimeout(() => toast.remove(), 300);
+}, 5000);
+};
+
+const addToHistory = (action, data) => {
+historyStack.push({ action, data });
+redoStack = [];
+updateUndoRedoButtons();
+};
+
+const updateUndoRedoButtons = () => {
+undoBtn.disabled = historyStack.length === 0;
+redoBtn.disabled = redoStack.length === 0;
+};
+
+// Chart Initialization
+const initCharts = () => {
+const isDark = document.documentElement.classList.contains('dark');
+const textColor = isDark ? '#fff' : '#333';
+const gridColor = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+
+// Line Chart
+const lineCtx = document.getElementById('tasks-line-chart').getContext('2d');
+charts.lineChart = new Chart(lineCtx, {
+type: 'line',
+data: {
+labels: [],
+datasets: [{
+label: 'Completed Tasks',
+data: [],
+borderColor: '#5D5CDE',
+backgroundColor: 'rgba(93, 92, 222, 0.2)',
+fill: true
+}]
+},
+options: {
+responsive: true,
+maintainAspectRatio: false,
+plugins: {
+legend: {
+labels: {
+color: textColor
+}
+}
+},
+scales: {
+x: {
+ticks: {
+color: textColor
+},
+grid: {
+color: gridColor
+}
+},
+y: {
+ticks: {
+color: textColor
+},
+grid: {
+color: gridColor
+}
+}
+}
+}
+});
+
+// Pie Chart
+const pieCtx = document.getElementById('tasks-pie-chart').getContext('2d');
+charts.pieChart = new Chart(pieCtx, {
+type: 'pie',
+data: {
+labels: ['Completed', 'Pending'],
+datasets: [{
+data: [0, 0],
+backgroundColor: ['#28A745', '#FFC107']
+}]
+},
+options: {
+responsive: true,
+maintainAspectRatio: false,
+plugins: {
+legend: {
+labels: {
+color: textColor
+}
+}
+}
+}
+});
+
+// Priority Chart
+const priorityCtx = document.getElementById('tasks-priority-chart').getContext('2d');
+charts.priorityChart = new Chart(priorityCtx, {
+type: 'bar',
+data: {
+labels: ['High', 'Medium', 'Low'],
+datasets: [{
+label: 'Tasks by Priority',
+data: [0, 0, 0],
+backgroundColor: ['#DC3545', '#FD7E14', '#6C757D']
+}]
+},
+options: {
+responsive: true,
+maintainAspectRatio: false,
+plugins: {
+legend: {
+labels: {
+color: textColor
+}
+}
+},
+scales: {
+x: {
+ticks: {
+color: textColor
+},
+grid: {
+color: gridColor
+}
+},
+y: {
+ticks: {
+color: textColor
+},
+grid: {
+color: gridColor
+}
+}
+}
+}
+});
+
+// Category Chart
+const categoryCtx = document.getElementById('tasks-category-chart').getContext('2d');
+charts.categoryChart = new Chart(categoryCtx, {
+type: 'bar',
+data: {
+labels: [],
+datasets: [{
+label: 'Tasks by Category',
+data: [],
+backgroundColor: '#5D5CDE'
+}]
+},
+options: {
+responsive: true,
+maintainAspectRatio: false,
+plugins: {
+legend: {
+labels: {
+color: textColor
+}
+}
+},
+scales: {
+x: {
+ticks: {
+color: textColor
+},
+grid: {
+color: gridColor
+}
+},
+y: {
+ticks: {
+color: textColor
+},
+grid: {
+color: gridColor
+}
+}
+}
+}
+});
+};
+
+const updateCharts = () => {
+const completed = tasks.filter(t => t.completed).length;
+const pending = tasks.length - completed;
+
+// Update counts
+document.getElementById('total-tasks-count').textContent = tasks.length;
+document.getElementById('completed-tasks-count').textContent = completed;
+document.getElementById('pending-tasks-count').textContent = pending;
+
+// Update Pie Chart
+charts.pieChart.data.datasets[0].data = [completed, pending];
+charts.pieChart.update();
+
+// Update Priority Chart
+const highPriority = tasks.filter(t => t.priority === 'high').length;
+const mediumPriority = tasks.filter(t => t.priority === 'medium').length;
+const lowPriority = tasks.filter(t => t.priority === 'low').length;
+charts.priorityChart.data.datasets[0].data = [highPriority, mediumPriority, lowPriority];
+charts.priorityChart.update();
+
+// Update Category Chart
+const categoryCounts = {};
+categories.forEach(category => {
+categoryCounts[category] = tasks.filter(t => t.category === category).length;
+});
+charts.categoryChart.data.labels = categories;
+charts.categoryChart.data.datasets[0].data = categories.map(c => categoryCounts[c] || 0);
+charts.categoryChart.update();
+
+// Update Line Chart
+const today = new Date();
+const labels = [];
+const data = [];
+for (let i = 6; i >= 0; i--) {
+const date = new Date(today);
+date.setDate(today.getDate() - i);
+labels.push(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+const count = tasks.filter(t => {
+if (!t.createdAt) return false;
+const created = new Date(t.createdAt);
+return created.toDateString() === date.toDateString() && t.completed;
+}).length;
+data.push(count);
+}
+charts.lineChart.data.labels = labels;
+charts.lineChart.data.datasets[0].data = data;
+charts.lineChart.update();
+
+updateInsights();
+};
+
+const updateInsights = () => {
+const completed = tasks.filter(t => t.completed).length;
+const total = tasks.length;
+const productivity = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+const completionTimes = tasks.filter(t => t.completed && taskTimes[t.id]).map(t => taskTimes[t.id]);
+const avgCompletionTime = completionTimes.length > 0
+? (completionTimes.reduce((a, b) => a + b, 0) / completionTimes.length / 3600).toFixed(1)
+: 0;
+
+const now = new Date();
+const overdue = tasks.filter(t => !t.completed && t.dueDate && new Date(t.dueDate) < now).length;
+
+document.getElementById('productivity-trend').textContent = `${productivity}%`;
+document.getElementById('avg-completion-time').textContent = `${avgCompletionTime} hrs`;
+document.getElementById('overdue-tasks').textContent = overdue;
+
+let summary = `You have completed ${completed} out of ${total} tasks (${productivity}%). `;
+if (overdue > 0) {
+summary += `${overdue} task(s) are overdue. `;
+}
+if (avgCompletionTime > 0) {
+summary += `On average, tasks take ${avgCompletionTime} hours to complete.`;
+} else {
+summary += 'Complete some tasks to see average completion time.';
+}
+
+document.getElementById('insights-summary').textContent = summary;
+};
+
+// Task Management
+const createTask = (taskData) => {
+const task = {
+id: generateId(),
+...taskData,
+completed: false,
+createdAt: new Date().toISOString()
+};
+
+tasks.unshift(task);
+taskTimes[task.id] = 0;
+
+addToHistory('create', { task: { ...task } });
+
+saveTasks();
+saveTaskTimes();
+renderTasks();
+updateCharts();
+
+showToast('Task created successfully', 'success');
+addNotification(`Task "${task.title}" was created`);
+};
+
+const updateTask = (taskId, taskData) => {
+const taskIndex = tasks.findIndex(t => t.id === taskId);
+if (taskIndex === -1) return;
+
+addToHistory('update', {
+taskId,
+previousValue: { ...tasks[taskIndex] },
+newValue: { ...tasks[taskIndex], ...taskData }
+});
+
+tasks[taskIndex] = {
+...tasks[taskIndex],
+...taskData
+};
+
+saveTasks();
+renderTasks();
+updateCharts();
+
+showToast('Task updated successfully', 'success');
+addNotification(`Task "${tasks[taskIndex].title}" was updated`);
+};
+
+const deleteTask = (taskId) => {
+const taskIndex = tasks.findIndex(t => t.id === taskId);
+if (taskIndex === -1) return;
+
+addToHistory('delete', {
+task: { ...tasks[taskIndex] },
+index: taskIndex
+});
+
+const taskTitle = tasks[taskIndex].title;
+tasks.splice(taskIndex, 1);
+delete taskTimes[taskId];
+
+saveTasks();
+saveTaskTimes();
+renderTasks();
+updateCharts();
+
+showToast('Task deleted successfully', 'success');
+addNotification(`Task "${taskTitle}" was deleted`);
+};
+
+const toggleTaskCompletion = (taskId) => {
+const task = tasks.find(t => t.id === taskId);
+if (!task) return;
+
+addToHistory('toggle', {
+taskId,
+previousValue: { completed: task.completed }
+});
+
+task.completed = !task.completed;
+if (task.completed) {
+task.completedAt = new Date().toISOString();
+} else {
+delete task.completedAt;
+}
+
+saveTasks();
+renderTasks();
+updateCharts();
+
+showToast(`Task marked as ${task.completed ? 'completed' : 'pending'}`, 'success');
+addNotification(`Task "${task.title}" marked as ${task.completed ? 'completed' : 'pending'}`);
+};
+
+// Export Functionality
+const exportTasks = (format) => {
+const now = new Date();
+const timestamp = `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}_${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}`;
+const filename = `tasks_${timestamp}`;
+
+const exportData = tasks.map(task => ({
+id: task.id,
+title: task.title,
+description: task.description || '',
+subTasks: task.subTasks || [],
+dueDate: task.dueDate ? formatDate(task.dueDate) : '',
+priority: task.priority,
+category: task.category,
+notes: task.notes || '',
+completed: task.completed,
+createdAt: formatDate(task.createdAt),
+completedAt: task.completedAt ? formatDate(task.completedAt) : '',
+timeSpent: formatTime(taskTimes[task.id] || 0)
+}));
+
+if (format === 'json') {
+const dataStr = JSON.stringify(exportData, null, 2);
+const blob = new Blob([dataStr], { type: 'application/json' });
+const url = URL.createObjectURL(blob);
+downloadFile(url, `${filename}.json`);
+} else if (format === 'csv') {
+const headers = ['ID,Title,Description,SubTasks,Due Date,Priority,Category,Notes,Completed,Created At,Completed At,Time Spent'];
+const rows = exportData.map(task => [
+task.id,
+`"${task.title.replace(/"/g, '""')}"`,
+`"${task.description.replace(/"/g, '""')}"`,
+`"${task.subTasks.join('; ').replace(/"/g, '""')}"`,
+task.dueDate,
+task.priority,
+task.category,
+`"${task.notes.replace(/"/g, '""')}"`,
+task.completed,
+task.createdAt,
+task.completedAt,
+task.timeSpent
+].join(','));
+const csv = [...headers, ...rows].join('\n');
+const blob = new Blob([csv], { type: 'text/csv' });
+const url = URL.createObjectURL(blob);
+downloadFile(url, `${filename}.csv`);
+} else if (format === 'excel') {
+const ws = XLSX.utils.json_to_sheet(exportData);
+const wb = XLSX.utils.book_new();
+XLSX.utils.book_append_sheet(wb, ws, 'Tasks');
+const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+const url = URL.createObjectURL(blob);
+downloadFile(url, `${filename}.xlsx`);
+} else if (format === 'pdf') {
+const { jsPDF } = window.jspdf;
+const doc = new jsPDF();
+doc.autoTable({
+head: [['ID', 'Title', 'Due Date', 'Priority', 'Category', 'Completed']],
+body: exportData.map(task => [
+task.id,
+task.title,
+task.dueDate,
+task.priority,
+task.category,
+task.completed ? 'Yes' : 'No'
+]),
+theme: 'striped',
+headStyles: { fillColor: [93, 92, 222] },
+});
+doc.save(`${filename}.pdf`);
+}
+
+showToast(`Tasks exported as ${format.toUpperCase()}`, 'success');
+};
+
+const downloadFile = (url, filename) => {
+const link = document.createElement('a');
+link.href = url;
+link.download = filename;
+document.body.appendChild(link);
+link.click();
+document.body.removeChild(link);
+URL.revokeObjectURL(url);
+};
+
+// Import Functionality
+const importTasks = async (data) => {
+try {
+let importedTasks = [];
+if (typeof data === 'string') {
+importedTasks = JSON.parse(data);
+} else {
+importedTasks = data;
+}
+
+if (!Array.isArray(importedTasks)) {
+throw new Error('Invalid data format');
+}
+
+const validTasks = importedTasks.filter(task => task.title && task.priority && task.category);
+tasks = [...validTasks.map(task => ({
+id: generateId(),
+title: task.title,
+description: task.description || '',
+subTasks: task.subTasks || [],
+dueDate: task.dueDate || '',
+priority: task.priority,
+category: task.category,
+notes: task.notes || '',
+completed: !!task.completed,
+createdAt: task.createdAt || new Date().toISOString(),
+completedAt: task.completedAt || ''
+})), ...tasks];
+
+validTasks.forEach(task => {
+if (!categories.includes(task.category) && task.category) {
+categories.push(task.category);
+}
+});
+
+addToHistory('import', { tasks: validTasks });
+
+saveTasks();
+saveCategories();
+renderTasks();
+renderCategories();
+updateCharts();
+
+showToast(`Imported ${validTasks.length} tasks successfully`, 'success');
+addNotification(`Imported ${validTasks.length} tasks`);
+} catch (error) {
+showToast('Error importing tasks: ' + error.message, 'error');
+}
+};
+
+// Storage
+const saveTasks = () => {
+localStorage.setItem('tasks', JSON.stringify(tasks));
+};
+
+const saveTaskTimes = () => {
+localStorage.setItem('taskTimes', JSON.stringify(taskTimes));
+};
+
+const saveCategories = () => {
+localStorage.setItem('categories', JSON.stringify(categories));
+};
+
+const saveUser = () => {
+localStorage.setItem('currentUser', JSON.stringify(currentUser));
+};
+
+const loadData = () => {
+tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+taskTimes = JSON.parse(localStorage.getItem('taskTimes')) || {};
+categories = JSON.parse(localStorage.getItem('categories')) || ['Work', 'Personal', 'Urgent', 'Long-term'];
+currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+
+renderTasks();
+renderCategories();
+updateCharts();
+updateUserProfile();
+};
+
+// Render Functions
+const renderTasks = () => {
+const searchTerm = searchTasks.value.toLowerCase();
+const statusFilter = filterStatus.value;
+const categoryFilter = filterCategory.value;
+const priorityFilter = filterPriority.value;
+const dueDateFilter = filterDueDate.value;
+
+let filteredTasks = [...tasks];
+
+if (searchTerm) {
+filteredTasks = filteredTasks.filter(task =>
+task.title.toLowerCase().includes(searchTerm) ||
+(task.description && task.description.toLowerCase().includes(searchTerm))
+);
+}
+
+if (statusFilter !== 'all') {
+filteredTasks = filteredTasks.filter(task =>
+statusFilter === 'active' ? !task.completed : task.completed
+);
+}
+
+if (categoryFilter !== 'all') {
+filteredTasks = filteredTasks.filter(task => task.category === categoryFilter);
+}
+
+if (priorityFilter !== 'all') {
+filteredTasks = filteredTasks.filter(task => task.priority === priorityFilter);
+}
+
+if (dueDateFilter !== 'all') {
+const now = new Date();
+if (dueDateFilter === 'today') {
+filteredTasks = filteredTasks.filter(task => {
+if (!task.dueDate) return false;
+const due = new Date(task.dueDate);
+return due.toDateString() === now.toDateString();
+});
+} else if (dueDateFilter === 'week') {
+const weekEnd = new Date(now);
+weekEnd.setDate(now.getDate() + 7);
+filteredTasks = filteredTasks.filter(task => {
+if (!task.dueDate) return false;
+const due = new Date(task.dueDate);
+return due >= now && due <= weekEnd;
+});
+} else if (dueDateFilter === 'month') {
+const monthEnd = new Date(now);
+monthEnd.setMonth(now.getMonth() + 1);
+filteredTasks = filteredTasks.filter(task => {
+if (!task.dueDate) return false;
+const due = new Date(task.dueDate);
+return due >= now && due <= monthEnd;
+});
+} else if (dueDateFilter === 'custom' && dateRangeStart && dateRangeEnd) {
+filteredTasks = filteredTasks.filter(task => {
+if (!task.dueDate) return false;
+const due = new Date(task.dueDate);
+return due >= dateRangeStart && due <= dateRangeEnd;
+});
+}
+}
+
+const [sortField, sortOrder] = sortBy.value.split('-');
+filteredTasks.sort((a, b) => {
+let valueA = a[sortField];
+let valueB = b[sortField];
+
+if (sortField === 'dueDate') {
+valueA = valueA ? new Date(valueA) : new Date(9999, 11, 31);
+valueB = valueB ? new Date(valueB) : new Date(9999, 11, 31);
+}
+
+if (sortField === 'priority') {
+const priorityOrder = { high: 3, medium: 2, low: 1 };
+valueA = priorityOrder[valueA];
+valueB = priorityOrder[valueB];
+}
+
+if (valueA < valueB) return sortOrder === 'asc' ? -1 : 1;
+if (valueA > valueB) return sortOrder === 'asc' ? 1 : -1;
+return 0;
+});
+
+tasksContainer.innerHTML = filteredTasks.length === 0
+? '<div class="text-center py-8 text-gray-500 dark:text-gray-400"><i class="fas fa-tasks text-5xl mb-4 opacity-30"></i><p class="text-lg">No tasks found</p></div>'
+: '';
+
+filteredTasks.forEach(task => {
+const taskElement = document.createElement('div');
+taskElement.className = `task-item p-4 rounded-lg shadow-md bg-white dark:bg-gray-700 card-hover priority-${task.priority} ${task.completed ? 'opacity-60' : ''}`;
+taskElement.dataset.id = task.id;
+
+const now = new Date();
+const dueDate = task.dueDate ? new Date(task.dueDate) : null;
+let statusClass = 'status-ok';
+if (dueDate) {
+const diffDays = Math.ceil((dueDate - now) / (1000 * 60 * 60 * 24));
+if (!task.completed) {
+if (dueDate < now) statusClass = 'status-expired';
+else if (diffDays <= 3) statusClass = 'status-warning';
+}
+}
+
+taskElement.innerHTML = `
+<div class="flex items-start space-x-3">
+<input type="checkbox" class="task-checkbox mt-1 h-5 w-5 text-primary focus:ring-primary rounded" ${selectedTasks.has(task.id) ? 'checked' : ''}>
+<div class="flex-1">
+<div class="flex justify-between items-center">
+<div class="flex items-center space-x-2">
+<h3 class="font-semibold text-gray-800 dark:text-white ${task.completed ? 'line-through' : ''}">${task.title}</h3>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-${task.priority === 'high' ? 'red' : task.priority === 'medium' ? 'yellow' : 'gray'}-100 text-${task.priority === 'high' ? 'red' : task.priority === 'medium' ? 'yellow' : 'gray'}-800 capitalize">${task.priority}</span>
+</div>
+<div class="flex items-center space-x-2">
+${dueDate ? `<span class="text-sm text-gray-500 dark:text-gray-400 border-l-2 pl-2 ${statusClass}">${formatDate(task.dueDate)}</span>` : ''}
+<button class="toggle-timer-btn p-1 text-gray-500 hover:text-primary" title="${activeTaskId === task.id ? 'Pause' : 'Start'} Timer">
+<i class="fas fa-${activeTaskId === task.id ? 'pause' : 'play'}-circle"></i>
+</button>
+</div>
+</div>
+${task.description ? `<p class="mt-1 text-gray-600 dark:text-gray-300">${task.description}</p>` : ''}
+<div class="mt-2 flex flex-wrap items-center gap-2">
+<span class="text-sm text-gray-500 dark:text-gray-400">Category: ${task.category}</span>
+${task.subTasks && task.subTasks.length ? `
+<span class="text-sm text-gray-500 dark:text-gray-400">Sub-tasks: ${task.subTasks.filter(st => st.completed).length}/${task.subTasks.length}</span>
+` : ''}
+<span class="text-sm text-gray-500 dark:text-gray-400">Time: ${formatTime(taskTimes[task.id] || 0)}</span>
+</div>
+</div>
+<div class="flex space-x-2">
+<button class="view-task-btn p-2 text-gray-500 hover:text-primary" title="View Task">
+<i class="fas fa-eye"></i>
+</button>
+<button class="edit-task-btn p-2 text-gray-500 hover:text-primary" title="Edit Task">
+<i class="fas fa-edit"></i>
+</button>
+<button class="delete-task-btn p-2 text-gray-500 hover:text-red-500" title="Delete Task">
+<i class="fas fa-trash"></i>
+</button>
+</div>
+</div>
+`;
+
+tasksContainer.appendChild(taskElement);
+});
+
+updateMultiActionBar();
+initDragAndDrop();
+};
+
+// Drag and Drop
+const initDragAndDrop = () => {
+const container = tasksContainer;
+if (container.sortable) {
+container.sortable.destroy();
+}
+
+container.sortable = new Sortable(container, {
+animation: 150,
+ghostClass: 'sortable-ghost',
+dragClass: 'sortable-drag',
+onEnd: (evt) => {
+const oldIndex = evt.oldIndex;
+const newIndex = evt.newIndex;
+
+if (oldIndex === newIndex) return;
+
+const movedTask = tasks.splice(oldIndex, 1)[0];
+tasks.splice(newIndex, 0, movedTask);
+
+addToHistory('reorder', {
+oldIndex,
+newIndex,
+task: { ...movedTask }
+});
+
+saveTasks();
+showToast('Task reordered', 'success');
+}
+});
+};
+
+const renderCategories = () => {
+const categorySelect = document.getElementById('task-category');
+const filterCategorySelect = document.getElementById('filter-category');
+const categoriesList = document.getElementById('categories-list');
+
+categorySelect.innerHTML = '<option value="">Select Category</option>';
+filterCategorySelect.innerHTML = '<option value="all">All Categories</option>';
+categoriesList.innerHTML = '';
+
+categories.forEach(category => {
+categorySelect.innerHTML += `<option value="${category}">${category}</option>`;
+filterCategorySelect.innerHTML += `<option value="${category}">${category}</option>`;
+categoriesList.innerHTML += `
+<tr>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-white">${category}</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+<button class="delete-category-btn text-red-500 hover:text-red-700" data-category="${category}">
+<i class="fas fa-trash"></i>
+</button>
+</td>
+</tr>
+`;
+});
+};
+
+const updateMultiActionBar = () => {
+selectedCount.textContent = selectedTasks.size;
+multiActionBar.classList.toggle('show', selectedTasks.size > 0);
+};
+
+const updateUserProfile = () => {
+if (currentUser) {
+document.getElementById('user-avatar').src = currentUser.avatar || 'https://randomuser.me/api/portraits/men/32.jpg';
+document.getElementById('profile-image').src = currentUser.avatar || 'https://randomuser.me/api/portraits/men/32.jpg';
+document.getElementById('edit-profile-image').src = currentUser.avatar || 'https://randomuser.me/api/portraits/men/32.jpg';
+document.getElementById('profile-name').textContent = `${currentUser.firstName} ${currentUser.lastName}`;
+document.getElementById('profile-role').textContent = currentUser.role;
+document.getElementById('profile-email').textContent = currentUser.email;
+document.getElementById('profile-country').textContent = currentUser.country;
+document.getElementById('profile-joining-date').textContent = formatDate(currentUser.joiningDate);
+}
+};
+
+// Notifications
+const addNotification = (message) => {
+notifications.push({
+id: generateId(),
+message,
+read: false,
+timestamp: new Date().toISOString()
+});
+renderNotifications();
+};
+
+const renderNotifications = () => {
+const unreadCount = notifications.filter(n => !n.read).length;
+document.getElementById('notification-badge').textContent = unreadCount;
+notificationList.innerHTML = notifications.length === 0
+? '<div class="px-4 py-3 text-gray-500 dark:text-gray-400 text-center">No notifications yet</div>'
+: '';
+
+notifications.forEach(notification => {
+const notificationElement = document.createElement('div');
+notificationElement.className = `px-4 py-3 flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-700 ${notification.read ? 'opacity-60' : ''}`;
+notificationElement.innerHTML = `
+<div class="flex-1">
+<p class="text-sm text-gray-800 dark:text-white">${notification.message}</p>
+<span class="text-xs text-gray-500 dark:text-gray-400">${new Date(notification.timestamp).toLocaleTimeString()}</span>
+</div>
+<button class="mark-read-btn p-2 text-gray-500 hover:text-primary" data-id="${notification.id}">
+<i class="fas fa-check"></i>
+</button>
+`;
+notificationList.appendChild(notificationElement);
+});
+};
+
+// Timer
+const startTimer = (taskId) => {
+if (activeTimer) {
+clearInterval(activeTimer);
+}
+activeTaskId = taskId;
+activeTimer = setInterval(() => {
+taskTimes[taskId] = (taskTimes[taskId] || 0) + 1;
+saveTaskTimes();
+renderTasks();
+taskTimerDisplay.textContent = formatTime(taskTimes[taskId]);
+}, 1000);
+};
+
+const pauseTimer = () => {
+if (activeTimer) {
+clearInterval(activeTimer);
+activeTimer = null;
+activeTaskId = null;
+renderTasks();
+}
+};
+
+// Undo/Redo
+const undo = () => {
+if (historyStack.length === 0) return;
+
+const lastAction = historyStack.pop();
+redoStack.push(lastAction);
+
+if (lastAction.action === 'create') {
+tasks = tasks.filter(t => t.id !== lastAction.data.task.id);
+} else if (lastAction.action === 'delete') {
+tasks.splice(lastAction.data.index, 0, lastAction.data.task);
+taskTimes[lastAction.data.task.id] = 0;
+} else if (lastAction.action === 'update') {
+const taskIndex = tasks.findIndex(t => t.id === lastAction.data.taskId);
+tasks[taskIndex] = { ...lastAction.data.previousValue };
+} else if (lastAction.action === 'toggle') {
+const task = tasks.find(t => t.id === lastAction.data.taskId);
+task.completed = lastAction.data.previousValue.completed;
+} else if (lastAction.action === 'reorder') {
+const task = tasks.splice(lastAction.data.newIndex, 1)[0];
+tasks.splice(lastAction.data.oldIndex, 0, task);
+} else if (lastAction.action === 'import') {
+tasks = tasks.filter(t => !lastAction.data.tasks.some(imported => imported.id === t.id));
+}
+
+saveTasks();
+saveTaskTimes();
+renderTasks();
+updateCharts();
+updateUndoRedoButtons();
+
+showToast('Action undone', 'success');
+};
+
+const redo = () => {
+if (redoStack.length === 0) return;
+
+const action = redoStack.pop();
+historyStack.push(action);
+
+if (action.action === 'create') {
+tasks.unshift(action.data.task);
+taskTimes[action.data.task.id] = 0;
+} else if (action.action === 'delete') {
+tasks.splice(action.data.index, 1);
+delete taskTimes[action.data.task.id];
+} else if (action.action === 'update') {
+const taskIndex = tasks.findIndex(t => t.id === action.data.taskId);
+tasks[taskIndex] = { ...action.data.newValue };
+} else if (action.action === 'toggle') {
+const task = tasks.find(t => t.id === action.data.taskId);
+task.completed = !action.data.previousValue.completed;
+} else if (action.action === 'reorder') {
+const task = tasks.splice(action.data.oldIndex, 1)[0];
+tasks.splice(action.data.newIndex, 0, task);
+} else if (action.action === 'import') {
+tasks.push(...action.data.tasks);
+}
+
+saveTasks();
+saveTaskTimes();
+renderTasks();
+updateCharts();
+updateUndoRedoButtons();
+
+showToast('Action redone', 'success');
+};
+
+// Event Listeners
+loginForm.addEventListener('submit', (e) => {
+e.preventDefault();
+const email = document.getElementById('email').value;
+const password = document.getElementById('password').value;
+
+currentUser = {
+email,
+firstName: 'John',
+lastName: 'Doe',
+role: 'Manager',
+country: 'United States',
+joiningDate: new Date().toISOString(),
+avatar: 'https://randomuser.me/api/portraits/men/32.jpg'
+};
+
+saveUser();
+loginPage.classList.add('hidden');
+dashboardPage.classList.remove('hidden');
+loadData();
+showToast('Logged in successfully', 'success');
+});
+
+registerLink.addEventListener('click', () => {
+registerModal.classList.remove('hidden');
+});
+
+registerCloseButtons.forEach(btn => {
+btn.addEventListener('click', () => {
+registerModal.classList.add('hidden');
+});
+});
+
+registerForm.addEventListener('submit', (e) => {
+e.preventDefault();
+const email = document.getElementById('reg-email').value;
+const confirmEmail = document.getElementById('confirm-email').value;
+const password = document.getElementById('reg-password').value;
+const confirmPassword = document.getElementById('confirm-password').value;
+
+if (email !== confirmEmail) {
+showToast('Emails do not match', 'error');
+return;
+}
+
+if (password !== confirmPassword) {
+showToast('Passwords do not match', 'error');
+return;
+}
+
+currentUser = {
+email,
+firstName: document.getElementById('first-name').value,
+lastName: document.getElementById('last-name').value,
+role: document.getElementById('role').value,
+country: document.getElementById('nationality').value,
+joiningDate: new Date().toISOString(),
+avatar: 'https://randomuser.me/api/portraits/men/32.jpg'
+};
+
+saveUser();
+registerModal.classList.add('hidden');
+loginPage.classList.add('hidden');
+dashboardPage.classList.remove('hidden');
+loadData();
+showToast('Registered successfully', 'success');
+});
+
+darkModeToggle.addEventListener('click', () => {
+document.documentElement.classList.toggle('dark');
+const isDark = document.documentElement.classList.contains('dark');
+localStorage.setItem('darkMode', isDark);
+darkModeToggle.querySelector('i').className = isDark ? 'fas fa-moon' : 'fas fa-sun';
+initCharts();
+});
+
+addTaskBtn.addEventListener('click', () => {
+taskForm.reset();
+document.getElementById('task-modal-title').textContent = 'Add Task';
+document.getElementById('task-id').value = '';
+document.getElementById('subtasks-container').innerHTML = '';
+taskModal.classList.remove('hidden');
+});
+
+taskModalCloseButtons.forEach(btn => {
+btn.addEventListener('click', () => {
+taskModal.classList.add('hidden');
+});
+});
+
+taskForm.addEventListener('submit', (e) => {
+e.preventDefault();
+const taskId = document.getElementById('task-id').value;
+const taskData = {
+title: document.getElementById('task-title').value,
+description: document.getElementById('task-description').value,
+subTasks: Array.from(document.querySelectorAll('.subtask-input')).map(input => ({
+id: generateId(),
+title: input.value,
+completed: false
+})),
+dueDate: document.getElementById('task-due-date').value,
+priority: document.getElementById('task-priority').value,
+category: document.getElementById('task-category').value,
+notes: document.getElementById('task-notes').value
+};
+
+if (taskId) {
+updateTask(taskId, taskData);
+} else {
+createTask(taskData);
+}
+
+taskModal.classList.add('hidden');
+});
+
+viewTaskModalCloseButtons.forEach(btn => {
+btn.addEventListener('click', () => {
+viewTaskModal.classList.add('hidden');
+});
+});
+
+tasksContainer.addEventListener('click', (e) => {
+const taskId = e.target.closest('.task-item')?.dataset.id;
+if (!taskId) return;
+
+if (e.target.classList.contains('edit-task-btn')) {
+const task = tasks.find(t => t.id === taskId);
+if (!task) return;
+
+document.getElementById('task-id').value = task.id;
+document.getElementById('task-title').value = task.title;
+document.getElementById('task-description').value = task.description || '';
+document.getElementById('task-due-date').value = task.dueDate || '';
+document.getElementById('task-priority').value = task.priority;
+document.getElementById('task-category').value = task.category;
+document.getElementById('task-notes').value = task.notes || '';
+document.getElementById('subtasks-container').innerHTML = '';
+task.subTasks?.forEach(subTask => {
+const subTaskElement = document.createElement('div');
+subTaskElement.className = 'subtask flex items-center space-x-2';
+subTaskElement.innerHTML = `
+<input type="text" class="subtask-input flex-1 rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" value="${subTask.title}">
+<button type="button" class="remove-subtask-btn text-red-500 hover:text-red-700">
+<i class="fas fa-trash"></i>
+</button>
+`;
+document.getElementById('subtasks-container').appendChild(subTaskElement);
+});
+document.getElementById('task-modal-title').textContent = 'Edit Task';
+taskModal.classList.remove('hidden');
+} else if (e.target.classList.contains('delete-task-btn')) {
+if (confirm('Are you sure you want to delete this task?')) {
+deleteTask(taskId);
+}
+} else if (e.target.classList.contains('view-task-btn')) {
+const task = tasks.find(t => t.id === taskId);
+if (!task) return;
+
+document.getElementById('view-task-title').textContent = task.title;
+document.getElementById('view-task-description').textContent = task.description || 'No description';
+document.getElementById('view-subtasks-list').innerHTML = task.subTasks?.length
+? task.subTasks.map(st => `<li class="${st.completed ? 'line-through' : ''}">${st.title}</li>`).join('')
+: '<li>No sub-tasks</li>';
+document.getElementById('view-task-due-date').textContent = task.dueDate ? formatDate(task.dueDate) : 'No due date';
+document.getElementById('view-task-priority').innerHTML = `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-${task.priority === 'high' ? 'red' : task.priority === 'medium' ? 'yellow' : 'gray'}-100 text-${task.priority === 'high' ? 'red' : task.priority === 'medium' ? 'yellow' : 'gray'}-800 capitalize">${task.priority}</span>`;
+document.getElementById('view-task-category').textContent = task.category || 'No category';
+document.getElementById('view-task-status').innerHTML = `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${task.completed ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}">${task.completed ? 'Completed' : 'Pending'}</span>`;
+document.getElementById('view-task-notes').textContent = task.notes || 'No notes';
+document.getElementById('view-task-time').textContent = formatTime(taskTimes[task.id] || 0);
+viewTaskModal.classList.remove('hidden');
+} else if (e.target.classList.contains('toggle-timer-btn')) {
+if (activeTaskId === taskId) {
+pauseTimer();
+} else {
+startTimer(taskId);
+}
+}
+});
+
+document.getElementById('add-subtask-btn').addEventListener('click', () => {
+const subTaskElement = document.createElement('div');
+subTaskElement.className = 'subtask flex items-center space-x-2';
+subTaskElement.innerHTML = `
+<input type="text" class="subtask-input flex-1 rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 text-base dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Enter sub-task">
+<button type="button" class="remove-subtask-btn text-red-500 hover:text-red-700">
+<i class="fas fa-trash"></i>
+</button>
+`;
+document.getElementById('subtasks-container').appendChild(subTaskElement);
+});
+
+document.getElementById('subtasks-container').addEventListener('click', (e) => {
+if (e.target.classList.contains('remove-subtask-btn')) {
+e.target.closest('.subtask').remove();
+}
+});
+
+exportBtn.addEventListener('click', () => {
+exportModal.classList.remove('hidden');
+});
+
+exportModalCloseButtons.forEach(btn => {
+btn.addEventListener('click', () => {
+exportModal.classList.add('hidden');
+});
+});
+
+downloadBtn.addEventListener('click', () => {
+const format = document.getElementById('export-format').value;
+exportTasks(format);
+exportModal.classList.add('hidden');
+});
+
+importBtn.addEventListener('click', () => {
+importModal.classList.remove('hidden');
+});
+
+importModalCloseButtons.forEach(btn => {
+btn.addEventListener('click', () => {
+importModal.classList.add('hidden');
+});
+});
+
+browseFileBtn.addEventListener('click', () => {
+importFile.click();
+});
+
+importFile.addEventListener('change', () => {
+const file = importFile.files[0];
+if (file) {
+const reader = new FileReader();
+reader.onload = (e) => {
+importTasks(e.target.result);
+importModal.classList.add('hidden');
+importFile.value = '';
+};
+reader.readAsText(file);
+}
+});
+
+importBtnConfirm.addEventListener('click', async () => {
+const url = document.getElementById('import-url').value;
+if (url) {
+try {
+const response = await fetch(url);
+const data = await response.json();
+importTasks(data);
+importModal.classList.add('hidden');
+} catch (error) {
+showToast('Error fetching tasks from URL', 'error');
+}
+}
+});
+
+manageCategoriesBtn.addEventListener('click', () => {
+categoriesModal.classList.remove('hidden');
+});
+
+categoriesModalCloseButtons.forEach(btn => {
+btn.addEventListener('click', () => {
+categoriesModal.classList.add('hidden');
+});
+});
+
+document.getElementById('add-category-btn').addEventListener('click', () => {
+const newCategory = document.getElementById('new-category').value.trim();
+if (newCategory && !categories.includes(newCategory)) {
+categories.push(newCategory);
+saveCategories();
+renderCategories();
+document.getElementById('new-category').value = '';
+showToast('Category added', 'success');
+} else {
+showToast('Category already exists or is invalid', 'error');
+}
+});
+
+categoriesModal.addEventListener('click', (e) => {
+if (e.target.classList.contains('delete-category-btn')) {
+const category = e.target.dataset.category;
+if (tasks.some(t => t.category === category)) {
+showToast('Cannot delete category with assigned tasks', 'error');
+return;
+}
+categories = categories.filter(c => c !== category);
+saveCategories();
+renderCategories();
+showToast('Category deleted', 'success');
+}
+});
+
+profileBtn.addEventListener('click', () => {
+profileDropdown.classList.toggle('hidden');
+});
+
+viewProfileBtn.addEventListener('click', () => {
+profileDropdown.classList.add('hidden');
+profileViewModal.classList.remove('hidden');
+});
+
+profileViewModalCloseButtons.forEach(btn => {
+btn.addEventListener('click', () => {
+profileViewModal.classList.add('hidden');
+});
+});
+
+document.getElementById('profile-edit-btn').addEventListener('click', () => {
+profileViewModal.classList.add('hidden');
+document.getElementById('edit-first-name').value = currentUser.firstName;
+document.getElementById('edit-last-name').value = currentUser.lastName;
+document.getElementById('edit-email').value = currentUser.email;
+document.getElementById('edit-country').value = currentUser.country;
+document.getElementById('edit-role').value = currentUser.role;
+profileEditModal.classList.remove('hidden');
+});
+
+profileEditModalCloseButtons.forEach(btn => {
+btn.addEventListener('click', () => {
+profileEditModal.classList.add('hidden');
+});
+});
+
+profileEditForm.addEventListener('submit', (e) => {
+e.preventDefault();
+currentUser = {
+...currentUser,
+firstName: document.getElementById('edit-first-name').value,
+lastName: document.getElementById('edit-last-name').value,
+email: document.getElementById('edit-email').value,
+country: document.getElementById('edit-country').value,
+role: document.getElementById('edit-role').value
+};
+saveUser();
+updateUserProfile();
+profileEditModal.classList.add('hidden');
+showToast('Profile updated', 'success');
+});
+
+logoutBtn.addEventListener('click', () => {
+currentUser = null;
+saveUser();
+dashboardPage.classList.add('hidden');
+loginPage.classList.remove('hidden');
+profileDropdown.classList.add('hidden');
+showToast('Logged out', 'success');
+});
+
+notificationBtn.addEventListener('click', () => {
+notificationDropdown.classList.toggle('hidden');
+});
+
+notificationList.addEventListener('click', (e) => {
+if (e.target.classList.contains('mark-read-btn')) {
+const id = e.target.dataset.id;
+const notification = notifications.find(n => n.id === id);
+if (notification) {
+notification.read = true;
+renderNotifications();
+}
+}
+});
+
+markAllReadBtn.addEventListener('click', () => {
+notifications.forEach(n => n.read = true);
+renderNotifications();
+});
+
+listViewBtn.addEventListener('click', () => {
+tasksListView.classList.remove('hidden');
+tasksGraphView.classList.add('hidden');
+listViewBtn.classList.add('bg-primary', 'text-white');
+listViewBtn.classList.remove('bg-gray-200', 'text-gray-700');
+graphViewBtn.classList.remove('bg-primary', 'text-white');
+graphViewBtn.classList.add('bg-gray-200', 'text-gray-700', 'dark:bg-gray-700', 'dark:text-gray-300');
+});
+
+graphViewBtn.addEventListener('click', () => {
+tasksGraphView.classList.remove('hidden');
+tasksListView.classList.add('hidden');
+graphViewBtn.classList.add('bg-primary', 'text-white');
+graphViewBtn.classList.remove('bg-gray-200', 'text-gray-700', 'dark:bg-gray-700', 'dark:text-gray-300');
+listViewBtn.classList.remove('bg-primary', 'text-white');
+listViewBtn.classList.add('bg-gray-200', 'text-gray-700', 'dark:bg-gray-700', 'dark:text-gray-300');
+});
+
+searchTasks.addEventListener('input', () => {
+renderTasks();
+});
+
+filterStatus.addEventListener('change', () => {
+renderTasks();
+});
+
+filterCategory.addEventListener('change', () => {
+renderTasks();
+});
+
+filterPriority.addEventListener('change', () => {
+renderTasks();
+});
+
+filterDueDate.addEventListener('change', () => {
+if (filterDueDate.value === 'custom') {
+dateRangeModal.classList.remove('hidden');
+} else {
+renderTasks();
+}
+});
+
+sortBy.addEventListener('change', () => {
+renderTasks();
+});
+
+tasksContainer.addEventListener('change', (e) => {
+if (e.target.classList.contains('task-checkbox')) {
+const taskId = e.target.closest('.task-item').dataset.id;
+if (e.target.checked) {
+selectedTasks.add(taskId);
+} else {
+selectedTasks.delete(taskId);
+}
+updateMultiActionBar();
+}
+});
+
+multiCompleteBtn.addEventListener('click', () => {
+selectedTasks.forEach(taskId => toggleTaskCompletion(taskId));
+selectedTasks.clear();
+updateMultiActionBar();
+renderTasks();
+});
+
+multiDeleteBtn.addEventListener('click', () => {
+if (confirm('Are you sure you want to delete selected tasks?')) {
+selectedTasks.forEach(taskId => deleteTask(taskId));
+selectedTasks.clear();
+updateMultiActionBar();
+renderTasks();
+}
+});
+
+multiCancelBtn.addEventListener('click', () => {
+selectedTasks.clear();
+updateMultiActionBar();
+renderTasks();
+});
+
+userStatus.addEventListener('change', () => {
+showToast(`Status changed to ${userStatus.value}`, 'info');
+});
+
+manageUsersBtn.addEventListener('click', () => {
+usersModal.classList.remove('hidden');
+usersContainer.innerHTML = `
+<div class="text-center py-8 text-gray-500 dark:text-gray-400">
+<i class="fas fa-users text-5xl mb-4 opacity-30"></i>
+<p class="text-lg">No users found</p>
+</div>
+`;
+});
+
+usersModalCloseButtons.forEach(btn => {
+btn.addEventListener('click', () => {
+usersModal.classList.add('hidden');
+});
+});
+
+applyDateRangeBtn.addEventListener('click', () => {
+dateRangeStart = new Date(document.getElementById('date-range-start').value);
+dateRangeEnd = new Date(document.getElementById('date-range-end').value);
+dateRangeModal.classList.add('hidden');
+renderTasks();
+});
+
+dateRangeModalCloseButtons.forEach(btn => {
+btn.addEventListener('click', () => {
+dateRangeModal.classList.add('hidden');
+filterDueDate.value = 'all';
+renderTasks();
+});
+});
+
+undoBtn.addEventListener('click', undo);
+redoBtn.addEventListener('click', redo);
+
+// Initialize Flatpickr
+flatpickr('#task-due-date', {
+enableTime: true,
+dateFormat: 'Y-m-d H:i',
+});
+
+flatpickr('#birthdate', {
+dateFormat: 'Y-m-d',
+});
+
+flatpickr('#date-range-start', {
+dateFormat: 'Y-m-d',
+});
+
+flatpickr('#date-range-end', {
+dateFormat: 'Y-m-d',
+});
+
+// Populate Countries
+const countries = ['United States', 'United Kingdom', 'Canada', 'Australia', 'Germany', 'France', 'India'];
+const nationalitySelect = document.getElementById('nationality');
+const editCountrySelect = document.getElementById('edit-country');
+countries.forEach(country => {
+nationalitySelect.innerHTML += `<option value="${country}">${country}</option>`;
+editCountrySelect.innerHTML += `<option value="${country}">${country}</option>`;
+});
+
+// Initialize
+const init = () => {
+const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+if (savedDarkMode) {
+document.documentElement.classList.add('dark');
+darkModeToggle.querySelector('i').className = 'fas fa-moon';
+}
+initCharts();
+loadData();
+if (currentUser) {
+loginPage.classList.add('hidden');
+dashboardPage.classList.remove('hidden');
+}
+};
+
+init();
+</script>
 </body>
 </html>
