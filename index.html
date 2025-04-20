@@ -2315,25 +2315,36 @@
         // --- Initialization ---
 
         const populateCountries = () => {
-            // Source: https://gist.github.com/incredimike/1469814
-            const countries = [
-                { "code": "US", "name": "United States" }, { "code": "CA", "name": "Canada" }, { "code": "GB", "name": "United Kingdom" },
-                { "code": "AF", "name": "Afghanistan" }, { "code": "AL", "name": "Albania" }, { "code": "DZ", "name": "Algeria" },
-                { "code": "AS", "name": "American Samoa" }, { "code": "AD", "name": "Andorra" }, { "code": "AO", "name": "Angola" },
-                // ... (add many more countries) ...
-                 { "code": "EG", "name": "Egypt" }, { "code": "JP", "name": "Japan" }, { "code": "DE", "name": "Germany" },
-                 { "code": "FR", "name": "France" }, { "code": "BR", "name": "Brazil" }, { "code": "IN", "name": "India" },
-                 { "code": "CN", "name": "China" }, { "code": "AU", "name": "Australia" },
-                { "code": "ZW", "name": "Zimbabwe" }
-            ];
-            countries.sort((a, b) => a.name.localeCompare(b.name)); // Sort alphabetically
-            countries.forEach(country => {
-                const option = document.createElement('option');
-                option.value = country.code;
-                option.textContent = country.name;
-                registerCountrySelect.appendChild(option);
-            });
-        };
+    // Source: https://gist.github.com/incredimike/1469814
+    const countries = [
+        { "code": "US", "name": "United States" }, 
+        { "code": "CA", "name": "Canada" }, 
+        { "code": "GB", "name": "United Kingdom" },
+        { "code": "AF", "name": "Afghanistan" }, 
+        { "code": "AL", "name": "Albania" }, 
+        { "code": "DZ", "name": "Algeria" },
+        { "code": "AS", "name": "American Samoa" }, 
+        { "code": "AD", "name": "Andorra" }, 
+        { "code": "AO", "name": "Angola" },
+        { "code": "EG", "name": "Egypt" }, 
+        { "code": "JP", "name": "Japan" }, 
+        { "code": "DE", "name": "Germany" },
+        { "code": "FR", "name": "France" }, 
+        { "code": "BR", "name": "Brazil" }, 
+        { "code": "IN", "name": "India" },
+        { "code": "CN", "name": "China" }, 
+        { "code": "AU", "Uncovered, "name": "South Africa" }, // New country added
+        { "code": "ZA", "name": "South Africa" }, // New country added
+        { "code": "ZW", "name": "Zimbabwe" }
+    ];
+    countries.sort((a, b) => a.name.localeCompare(b.name)); // Sort alphabetically
+    countries.forEach(country => {
+        const option = document.createElement('option');
+        option.value = country.code;
+        option.textContent = country.name;
+        registerCountrySelect.appendChild(option);
+    });
+};
 
         const populateAssigneeDropdown = () => {
              taskAssigneeSelect.innerHTML = '<option value="self">Self</option>'; // Reset and add self
