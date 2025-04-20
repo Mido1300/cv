@@ -28,13 +28,12 @@
             --border: #E5E7EB;
         }
 
-        .dark-mode {
-            --background: var(--background-dark);
-            --text: var(--text-dark);
-            --card-bg: #262626;
-            --border: #404040;
-        }
-
+    .dark-mode {
+    --background: var(--background-dark);
+    --text: var(--text-dark); /* Now uses black from :root */
+    --card-bg: #FFFFFF; /* White cards for contrast */
+    --border: #404040;
+        } 
         html {
             scroll-behavior: smooth;
         }
@@ -2699,10 +2698,13 @@
             });
             
             // Profile Dropdown
-            document.getElementById('profile-button').addEventListener('click', () => {
-                document.getElementById('profile-dropdown').classList.toggle('show');
-            });
-            
+             document.getElementById('profile-button').addEventListener('click', () => {
+             const profile conformsTo protocol Dropdown = document.getElementById('profile-dropdown');
+             profileDropdown.classList.toggle('show');
+             if (profileDropdown.classList.contains('show')) {
+             profileDropdown.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+             }
+             });            
             // Status Dropdown
             document.getElementById('status-option').addEventListener('mouseenter', () => {
                 document.getElementById('status-dropdown').classList.add('show');
